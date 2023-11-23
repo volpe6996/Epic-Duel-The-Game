@@ -1,0 +1,171 @@
+<UserControl x:Class="EpicDuelTheGame.Views.ChooseHeroView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:EpicDuelTheGame.Views"
+             xmlns:viewModels="clr-namespace:EpicDuelTheGame.ViewModels"
+             mc:Ignorable="d"
+             d:DesignHeight="800" d:DesignWidth="1280">
+    <Grid RenderOptions.EdgeMode="Aliased">
+        <Grid.Background>
+            <LinearGradientBrush x:Name="AnimatedGradient" StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Offset="0.1" Color="#e67781"/>
+                <GradientStop Offset="0.3" Color="#c94f5a"/>
+                <GradientStop Offset="0.7" Color="#ad343f"/>
+                <GradientStop Offset="0.9" Color="#b82330"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+
+        <Grid.Triggers>
+            <EventTrigger RoutedEvent="Grid.Loaded">
+                <BeginStoryboard>
+                    <Storyboard RepeatBehavior="Forever" Timeline.DesiredFrameRate="60" AutoReverse="True">
+                        <ColorAnimation Storyboard.TargetProperty="(Panel.Background).(GradientBrush.GradientStops)[0].Color" 
+                                        To="#b82330" Duration="0:0:3"/>
+                        <ColorAnimation Storyboard.TargetProperty="(Panel.Background).(GradientBrush.GradientStops)[1].Color" 
+                                        To="#ad343f" Duration="0:0:4"/>
+                        <ColorAnimation Storyboard.TargetProperty="(Panel.Background).(GradientBrush.GradientStops)[2].Color" 
+                                        To="#c94f5a" Duration="0:0:5"/>
+                        <ColorAnimation Storyboard.TargetProperty="(Panel.Background).(GradientBrush.GradientStops)[3].Color" 
+                                        To="#e67781" Duration="0:0:6"/>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+        </Grid.Triggers>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--USER COLUMN-->
+
+        <Grid 
+            Grid.Column="0" 
+            Grid.RowSpan="2"
+            Margin="55,0,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="4*"/>
+            </Grid.RowDefinitions>
+            <StackPanel 
+                Grid.Row="0"
+                HorizontalAlignment="Center"
+                Margin="0,10">
+                <Image 
+                    Source="{Binding SelectedUserImage.Path}"
+                    Width="200" 
+                    Height="200" 
+                    Stretch="Fill"/>
+                <Label
+                    HorizontalAlignment="Center"
+                    Content="{Binding HeroHeader}"/>
+            </StackPanel>
+        </Grid>
+
+        <ItemsControl 
+                x:Name="userItemsControl"
+                Grid.Column="1"
+                ItemsSource="{Binding Images}"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Bottom">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Vertical"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Button
+                        Command="{Binding DataContext.UserImageClickedCommand, ElementName=userItemsControl}"
+                        CommandParameter="{Binding}"
+                        Margin="0,5">
+                        <Button.Content>
+                            <Image 
+                                Source="{Binding Path}" 
+                                Width="170" 
+                                Height="170" 
+                                Stretch="Fill"/>
+                        </Button.Content>
+                    </Button>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <!--OPPONENT'S COLUMN-->
+
+        <ItemsControl 
+            x:Name="opponentItemsControl"
+            Grid.Column="2"
+            ItemsSource="{Binding Images}"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Bottom">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Vertical"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Button
+                        Command="{Binding DataContext.OpponentImageClickedCommand, ElementName=opponentItemsControl}"
+                        CommandParameter="{Binding}"
+                        Margin="0,5">
+                        <Button.Content>
+                            <Image 
+                                Source="{Binding Path}" 
+                                Width="170" 
+                                Height="170" 
+                                Stretch="Fill"/>
+                        </Button.Content>
+                    </Button>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <Grid 
+            Grid.Column="3" 
+            Grid.RowSpan="2"
+            Margin="0,0,55,0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="4*"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel 
+                    Grid.Row="0"
+                    HorizontalAlignment="Center"
+                    Margin="0,10">
+                    <Image 
+                        Source="{Binding SelectedOpponentImage.Path}"
+                        Width="200" 
+                        Height="200" 
+                        Stretch="Fill"/>
+                    <Label
+                            HorizontalAlignment="Center"
+                            Content="{Binding OpponentHeader}"/>
+                </StackPanel>
+            </Grid>
+
+        </Grid>
+
+        <Button
+             Grid.Column="1"
+             Grid.Row="1"
+             Grid.ColumnSpan="2"
+             Width="350" 
+             Height="75" 
+             FontSize="18" 
+             Content="Napierdalamy sie" 
+             Command="{Binding NavigateGameViewCommand}"/> 
+    </Grid>
+</UserControl>

@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net7.0-windows</TargetFramework>
+        <Nullable>enable</Nullable>
+        <UseWPF>true</UseWPF>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <None Remove="images\menel.jpg" />
+      <None Remove="images\piston.jpg" />
+      <None Remove="images\poziomka.jpg" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Resource Include="images\menel.jpg" />
+      <Resource Include="images\piston.jpg" />
+      <Resource Include="images\poziomka.jpg" />
+    </ItemGroup>
+
+</Project>

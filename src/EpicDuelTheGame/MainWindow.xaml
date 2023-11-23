@@ -1,0 +1,26 @@
+﻿<Window x:Class="EpicDuelTheGame.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EpicDuelTheGame"
+        xmlns:viewModels="clr-namespace:EpicDuelTheGame.ViewModels"
+        xmlns:views="clr-namespace:EpicDuelTheGame.Views"
+        mc:Ignorable="d"
+        Title="Epic Duel The Game"
+        d:DesignHeight="800" d:DesignWidth="1280"
+        ResizeMode="NoResize">
+        <ContentControl Content="{Binding CurrentViewModel }">
+                <ContentControl.Resources>
+                        <DataTemplate DataType="{x:Type viewModels:StartViewModel}">
+                                <views:StartView/>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type viewModels:ChooseHeroViewModel}">
+                                <views:ChooseHeroView/>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type viewModels:GameViewModel}">
+                                <views:GameView/>
+                        </DataTemplate>
+                </ContentControl.Resources>
+        </ContentControl>
+</Window>
