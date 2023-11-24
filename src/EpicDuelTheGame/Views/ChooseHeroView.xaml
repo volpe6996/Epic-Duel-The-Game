@@ -35,10 +35,10 @@
         </Grid.Triggers>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="4*"/>
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="4*"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
@@ -48,35 +48,39 @@
 
         <!--USER COLUMN-->
 
-        <Grid 
-            Grid.Column="0" 
-            Grid.RowSpan="2"
-            Margin="55,0,0,0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="2*"/>
-                <RowDefinition Height="4*"/>
-            </Grid.RowDefinitions>
-            <StackPanel 
+        <Border Grid.Column="0" 
+                Grid.RowSpan="2" BorderThickness="2" BorderBrush="Green">
+            <Grid 
+                Grid.Column="0" 
+                Grid.RowSpan="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="4*"/>
+                </Grid.RowDefinitions>
+                <Border BorderThickness="2" BorderBrush="DarkBlue">
+                    <StackPanel 
                 Grid.Row="0"
                 HorizontalAlignment="Center"
                 Margin="0,10">
-                <Image 
+                        <Image 
                     Source="{Binding SelectedUserImage.Path}"
-                    Width="200" 
-                    Height="200" 
+                    Width="172" 
+                    Height="172" 
                     Stretch="Fill"/>
-                <Label
+                        <Label
                     HorizontalAlignment="Center"
                     Content="{Binding HeroHeader}"/>
-            </StackPanel>
-        </Grid>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </Border>
 
-        <ItemsControl 
+        <!--<ItemsControl 
                 x:Name="userItemsControl"
                 Grid.Column="1"
                 ItemsSource="{Binding Images}"
                 HorizontalAlignment="Center"
-                VerticalAlignment="Bottom">
+                VerticalAlignment="Center">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel Orientation="Vertical"/>
@@ -91,23 +95,70 @@
                         <Button.Content>
                             <Image 
                                 Source="{Binding Path}" 
-                                Width="170" 
-                                Height="170" 
+                                Width="155" 
+                                Height="155" 
                                 Stretch="Fill"/>
                         </Button.Content>
                     </Button>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
-        </ItemsControl>
+        </ItemsControl>-->
+
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+
+            <Button
+                Grid.Row="0"
+                Command="{Binding UserImageClickedCommand}"
+                CommandParameter="{Binding Images[0]}"
+                Margin="15">
+                <Button.Content>
+                    <Image Source="{Binding Images[0].Path}" 
+                                Width="auto" 
+                                Height="auto" 
+                                Stretch="UniformToFill"/>
+                </Button.Content>
+            </Button>
+
+            <Button
+                Grid.Row="1"
+                Command="{Binding UserImageClickedCommand}"
+                CommandParameter="{Binding Images[1]}"
+                Margin="15,0">
+                <Button.Content>
+                    <Image Source="{Binding Images[1].Path}" 
+                                Width="auto" 
+                                Height="auto" 
+                                Stretch="UniformToFill"/>
+                </Button.Content>
+            </Button>
+
+            <Button
+                Grid.Row="2"
+                Command="{Binding UserImageClickedCommand}"
+                CommandParameter="{Binding Images[2]}"
+                Margin="15,15,15,0">
+                <Button.Content>
+                    <Image Source="{Binding Images[2].Path}" 
+                                Width="auto" 
+                                Height="auto" 
+                                Stretch="UniformToFill"/>
+                </Button.Content>
+            </Button>
+        </Grid>
 
         <!--OPPONENT'S COLUMN-->
-
-        <ItemsControl 
+        
+        <!--<ItemsControl 
             x:Name="opponentItemsControl"
             Grid.Column="2"
             ItemsSource="{Binding Images}"
             HorizontalAlignment="Center"
-            VerticalAlignment="Bottom">
+            VerticalAlignment="Center">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel Orientation="Vertical"/>
@@ -115,23 +166,99 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Button
-                        Command="{Binding DataContext.OpponentImageClickedCommand, ElementName=opponentItemsControl}"
-                        CommandParameter="{Binding}"
-                        Margin="0,5">
-                        <Button.Content>
-                            <Image 
+                    <Grid>
+                        <Button
+                            Command="{Binding DataContext.OpponentImageClickedCommand, ElementName=opponentItemsControl}"
+                            CommandParameter="{Binding}"
+                            Margin="0,5">
+                            <Button.Content>
+                                <Image 
                                 Source="{Binding Path}" 
-                                Width="170" 
-                                Height="170" 
+                                Width="155" 
+                                Height="155" 
                                 Stretch="Fill"/>
-                        </Button.Content>
-                    </Button>
+                            </Button.Content>
+                        </Button>
+                    </Grid>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
-        </ItemsControl>
+        </ItemsControl>-->
 
-        <Grid 
+        <Grid Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+
+            <Button
+                Grid.Row="0"
+                Command="{Binding OpponentImageClickedCommand}"
+                CommandParameter="{Binding Images[0]}"
+                Margin="15">
+                <Button.Content>
+                    <Image Source="{Binding Images[0].Path}" 
+                                Width="auto" 
+                                Height="auto" 
+                                Stretch="UniformToFill"/>
+                </Button.Content>
+            </Button>
+
+            <Button
+                Grid.Row="1"
+                Command="{Binding OpponentImageClickedCommand}"
+                CommandParameter="{Binding Images[1]}"
+                Margin="15,0">
+                <Button.Content>
+                    <Image Source="{Binding Images[1].Path}" 
+                                Width="auto" 
+                                Height="auto" 
+                                Stretch="UniformToFill"/>
+                </Button.Content>
+            </Button>
+
+            <Button
+                Grid.Row="2"
+                Command="{Binding OpponentImageClickedCommand}"
+                CommandParameter="{Binding Images[2]}"
+                Margin="15,15,15,0">
+                <Button.Content>
+                    <Image Source="{Binding Images[2].Path}" 
+                                Width="auto" 
+                                Height="auto" 
+                                Stretch="UniformToFill"/>
+                </Button.Content>
+            </Button>
+        </Grid>
+
+        <Border Grid.Column="3" 
+                Grid.RowSpan="2" BorderThickness="2" BorderBrush="Green">
+            <Grid 
+                Grid.Column="3" 
+                Grid.RowSpan="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="4*"/>
+                </Grid.RowDefinitions>
+                <Border BorderThickness="2" BorderBrush="DarkBlue">
+                    <StackPanel 
+                        Grid.Row="0"
+                        HorizontalAlignment="Center"
+                        Margin="0,10">
+                        <Image 
+                            Source="{Binding SelectedOpponentImage.Path}"
+                            Width="172" 
+                            Height="172" 
+                            Stretch="Fill"/>
+                            <Label
+                                HorizontalAlignment="Center"
+                                Content="{Binding OpponentHeader}"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </Border>
+
+        <!--<Grid 
             Grid.Column="3" 
             Grid.RowSpan="2"
             Margin="0,0,55,0">
@@ -140,23 +267,21 @@
                     <RowDefinition Height="2*"/>
                     <RowDefinition Height="4*"/>
                 </Grid.RowDefinitions>
-
                 <StackPanel 
                     Grid.Row="0"
                     HorizontalAlignment="Center"
                     Margin="0,10">
                     <Image 
                         Source="{Binding SelectedOpponentImage.Path}"
-                        Width="200" 
-                        Height="200" 
+                        Width="172" 
+                        Height="172" 
                         Stretch="Fill"/>
                     <Label
                             HorizontalAlignment="Center"
                             Content="{Binding OpponentHeader}"/>
                 </StackPanel>
             </Grid>
-
-        </Grid>
+        </Grid>-->
 
         <Button
              Grid.Column="1"
