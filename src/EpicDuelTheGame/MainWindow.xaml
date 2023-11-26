@@ -8,8 +8,7 @@
         xmlns:views="clr-namespace:EpicDuelTheGame.Views"
         mc:Ignorable="d"
         Title="Epic Duel The Game"
-        d:DesignHeight="800" d:DesignWidth="1280"
-        ResizeMode="NoResize">
+        d:DesignHeight="800" d:DesignWidth="1280">
         <ContentControl Content="{Binding CurrentViewModel }">
                 <ContentControl.Resources>
                         <DataTemplate DataType="{x:Type viewModels:StartViewModel}">

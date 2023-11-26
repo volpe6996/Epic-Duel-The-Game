@@ -1,49 +1,34 @@
-using ConsoleTextGame.Abstract;
 using System;
 
 namespace EpicDuelTheGame.Models;
 
-public class Ranger : Hero, IManipulateStats
+public class Ranger : Hero
 {
-    public int Dodge { get; set; }
+    private int _dodge;
+    public int Dodge
+    {
+        get { return _dodge; }
+        set
+        {
+            _dodge = value;
+            OnPropertyChanged(nameof(Dodge));
+        }
+    }
     
-    public Ranger(string name)
+    public Ranger(string name, string description, string path) : base(name, description, path)
     {
-        Init(name, 35, 30, 40, 35, 20);
+        this.Name = name == "" ? "Ranger" : name;
+        Init(35, 30, 40, 35, 50, 20);
     }
 
-    private void Init(string name, int hp, int strength, int dexterity, int intelligence, int dodge)
+    protected override void Init(int hp, int strength, int dexterity, int intelligence, int mana)
     {
-        this.Name = name;
-        this.Hp = hp;
-        this.Strength = strength;
-        this.Dexterity = dexterity;
-        this.Intelligence = intelligence;
-        this.Dodge = dodge;
+        base.Init(hp, strength, dexterity, intelligence, mana);
     }
 
-    public void UpHp()
+    protected void Init(int hp, int strength, int dexterity, int intelligence, int mana, int dodge)
     {
-        throw new NotImplementedException();
-    }
-
-    public void UpStrength()
-    {
-        throw new NotImplementedException();
-    }
-
-    public void UpDexterity()
-    {
-        throw new NotImplementedException();
-    }
-
-    public void UpIntelligence()
-    {
-        throw new NotImplementedException();
-    }
-
-    public void UpDodge()
-    {
-        
+        Dodge = dodge;
+        this.Init(hp, strength, dexterity, intelligence, mana);
     }
 }

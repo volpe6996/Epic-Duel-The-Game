@@ -4,19 +4,36 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:EpicDuelTheGame.Views"
+             xmlns:viewModels="clr-namespace:EpicDuelTheGame.ViewModels"
              mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="800" d:DesignWidth="1280"
+             Background="Wheat">
     <Grid RenderOptions.EdgeMode="Aliased">
-        <!-- Ustawienie LinearGradientBrush jako tła strony -->
-        <!-- <Grid.Background> -->
-        <!--     <LinearGradientBrush StartPoint="0,0" EndPoint="1,1"> -->
-        <!--         <GradientStop Offset="0" Color="#7b93a8"/> -->
-        <!--         <GradientStop Offset="0.5" Color="#46cb29"/> -->
-        <!--         <GradientStop Offset="1" Color="#19370a"/> -->
-        <!--     </LinearGradientBrush> -->
-        <!-- </Grid.Background> -->
+         <!--Ustawienie LinearGradientBrush jako tła strony 
+         <Grid.Background> 
+             <LinearGradientBrush StartPoint="0,0" EndPoint="1,1"> 
+                 <GradientStop Offset="0" Color="#7b93a8"/> 
+                 <GradientStop Offset="0.5" Color="#46cb29"/> 
+                 <GradientStop Offset="1" Color="#19370a"/> 
+             </LinearGradientBrush> 
+         </Grid.Background>--> 
         
-        <Grid.Background>
+          <!--<Grid.Triggers> 
+             <EventTrigger RoutedEvent="Grid.Loaded"> 
+                 <BeginStoryboard> 
+                     <Storyboard RepeatBehavior="Forever" Timeline.DesiredFrameRate="60" AutoReverse="True"> 
+                         <ColorAnimation Storyboard.TargetProperty="(Panel.Background).(GradientBrush.GradientStops)[0].Color"  
+                                         To="#3c4491" Duration="0:0:2"/> 
+                         <ColorAnimation Storyboard.TargetProperty="(Panel.Background).(GradientBrush.GradientStops)[1].Color"  
+                                         To="LightBlue" Duration="0:0:2"/> 
+                         <ColorAnimation Storyboard.TargetProperty="(Panel.Background).(GradientBrush.GradientStops)[2].Color"  
+                                         To="SkyBlue" Duration="0:0:2"/> 
+                     </Storyboard> 
+                 </BeginStoryboard> 
+             </EventTrigger> 
+         </Grid.Triggers>-->
+
+        <!--<Grid.Background>
             <LinearGradientBrush x:Name="AnimatedGradient" StartPoint="0,0" EndPoint="1,1">
                 <GradientStop Offset="0" Color="Red"/>
                 <GradientStop Offset="0.1" Color="Orange"/>
@@ -30,7 +47,7 @@
                 <GradientStop Offset="1" Color="Red"/>
             </LinearGradientBrush>
         </Grid.Background>
-        
+
         <Grid.Triggers>
             <EventTrigger RoutedEvent="Grid.Loaded">
                 <BeginStoryboard>
@@ -58,27 +75,312 @@
                     </Storyboard>
                 </BeginStoryboard>
             </EventTrigger>
-        </Grid.Triggers>
+        </Grid.Triggers>-->
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="6*"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
         
-        <!-- <Grid.Triggers> -->
-        <!--     <EventTrigger RoutedEvent="Grid.Loaded"> -->
-        <!--         <BeginStoryboard> -->
-        <!--             <Storyboard RepeatBehavior="Forever" Timeline.DesiredFrameRate="60" AutoReverse="True"> -->
-        <!--                 <ColorAnimation Storyboard.TargetProperty="(Panel.Background).(GradientBrush.GradientStops)[0].Color"  -->
-        <!--                                 To="#3c4491" Duration="0:0:2"/> -->
-        <!--                 <ColorAnimation Storyboard.TargetProperty="(Panel.Background).(GradientBrush.GradientStops)[1].Color"  -->
-        <!--                                 To="LightBlue" Duration="0:0:2"/> -->
-        <!--                 <ColorAnimation Storyboard.TargetProperty="(Panel.Background).(GradientBrush.GradientStops)[2].Color"  -->
-        <!--                                 To="SkyBlue" Duration="0:0:2"/> -->
-        <!--             </Storyboard> -->
-        <!--         </BeginStoryboard> -->
-        <!--     </EventTrigger> -->
-        <!-- </Grid.Triggers> -->
-        
+        <!--USER COLUMN-->
+
+        <Grid Grid.Column="0" Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="4*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="1.5*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="6*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="6*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="6*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Border Grid.Column="1" Grid.Row="1" BorderBrush="
+                            Blue" BorderThickness="1">
+                        <Button Content="Menu" Command="{Binding NavigateeStartViewCommand}"/>
+                    </Border>
+                    <Border Grid.Column="3" Grid.Row="1" BorderBrush="Red" BorderThickness="1">
+                        <Button Content="Menu"/>
+                    </Border>
+                </Grid>
+            </Grid>
+            <Border Grid.Column="1" BorderBrush="Green" BorderThickness="2">
+                <Grid Grid.Column="1">
+
+                </Grid>
+            </Border>
+        </Grid>
+        <Grid Grid.Column="0" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Column="0" BorderBrush="DeepSkyBlue" BorderThickness="2">
+                <Grid Grid.Column="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="18*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="10*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="10*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="10*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Border Grid.Column="1" Grid.Row="1" BorderBrush="Red" BorderThickness="1">
+                        <Button Content="Atak słaby"/>
+                    </Border>
+                    <Border Grid.Column="1" Grid.Row="3" BorderBrush="Red" BorderThickness="1">
+                        <Button Content="Atak mocny"/>
+                    </Border>
+                    <Border Grid.Column="1" Grid.Row="5" BorderBrush="Red" BorderThickness="1">
+                        <Button Content="Ult"/>
+                    </Border>
+                </Grid>
+            </Border>
+            <Border Grid.Column="1" BorderBrush="Green" BorderThickness="2">
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="10*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                </Grid>
+            </Border>
+            <Border Grid.Column="2" BorderBrush="Orange" BorderThickness="2">
+                <Grid Grid.Column="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="18*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="10*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="10*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="10*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Border Grid.Column="1" Grid.Row="1" BorderBrush="Red" BorderThickness="1">
+                        <Button Content="Spell 1"/>
+                    </Border>
+                    <Border Grid.Column="1" Grid.Row="3" BorderBrush="Red" BorderThickness="1">
+                        <Button Content="Spell 2"/>
+                    </Border>
+                </Grid>
+            </Border>
+        </Grid>
+        <Grid Grid.Column="0" Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Border Grid.Column="0" BorderBrush="DarkSlateGray" BorderThickness="3">
+                <Grid Grid.Column="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="32*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="8*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="8*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Border Grid.Column="1" Grid.Row="1" BorderBrush="Magenta" BorderThickness="3">
+                        <Grid>
+                            <ProgressBar Value="66" Foreground="Red" />
+                            <TextBlock Text="HP" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Grid>
+                    </Border>
+                    <Border Grid.Column="1" Grid.Row="3" BorderBrush="Magenta" BorderThickness="3">
+                        <Grid>
+                            <ProgressBar Value="88" Foreground="DeepSkyBlue" />
+                            <TextBlock Text="MANA" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </Border>
+            <Border Grid.Column="1" BorderBrush="Magenta" BorderThickness="3">
+                <Grid Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="8*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="4*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="8*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="8*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Border Grid.Column="1" Grid.Row="1" BorderBrush="Indigo" BorderThickness="3">
+                        <Grid Grid.Column="1" Grid.Row="1">
+                            <TextBlock Text="Inteligencja" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Grid>
+                    </Border>
+
+                    <Border Grid.Column="3" Grid.Row="1" BorderBrush="Indigo" BorderThickness="3">
+                        <Grid Grid.Column="1" Grid.Row="1" >
+                            <TextBlock Text="80" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Grid>
+                    </Border>
+
+                    <Border Grid.Column="1" Grid.Row="3" BorderBrush="Indigo" BorderThickness="3">
+                        <Grid Grid.Column="1" Grid.Row="1">
+                            <TextBlock Text="Zwinnosc" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Grid>
+                    </Border>
+
+                    <Border Grid.Column="3" Grid.Row="3" BorderBrush="Indigo" BorderThickness="3">
+                        <Grid Grid.Column="1" Grid.Row="1">
+                            <TextBlock Text="40" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <!--OPPONENET COLMUN-->
+
+        <Grid Grid.Column="1" Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Border Grid.Column="0" BorderBrush="Green" BorderThickness="2">
+            </Border>
+        </Grid>
+        <Grid Grid.Column="1" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Border Grid.Column="1" BorderBrush="Green" BorderThickness="2">
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="10*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                </Grid>
+            </Border>
+        </Grid>
+        <Grid Grid.Column="1" Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Border Grid.Column="0" BorderBrush="DarkSlateGray" BorderThickness="3">
+                <Grid Grid.Column="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="32*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="8*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="8*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Border Grid.Column="1" Grid.Row="1" BorderBrush="Magenta" BorderThickness="3">
+                        <Grid>
+                            <ProgressBar Value="66" Foreground="Red" />
+                            <TextBlock Text="HP" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Grid>
+                    </Border>
+                    <Border Grid.Column="1" Grid.Row="3" BorderBrush="Magenta" BorderThickness="3">
+                        <Grid>
+                            <ProgressBar Value="88" Foreground="DeepSkyBlue" />
+                            <TextBlock Text="MANA" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </Border>
+            <Border Grid.Column="1" BorderBrush="Magenta" BorderThickness="3">
+                <Grid Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="8*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="4*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="8*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="8*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Border Grid.Column="1" Grid.Row="1" BorderBrush="Indigo" BorderThickness="3">
+                        <Grid Grid.Column="1" Grid.Row="1">
+                            <TextBlock Text="Inteligencja" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Grid>
+                    </Border>
+
+                    <Border Grid.Column="3" Grid.Row="1" BorderBrush="Indigo" BorderThickness="3">
+                        <Grid Grid.Column="1" Grid.Row="1" >
+                            <TextBlock Text="80" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Grid>
+                    </Border>
+
+                    <Border Grid.Column="1" Grid.Row="3" BorderBrush="Indigo" BorderThickness="3">
+                        <Grid Grid.Column="1" Grid.Row="1">
+                            <TextBlock Text="Zwinnosc" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Grid>
+                    </Border>
+
+                    <Border Grid.Column="3" Grid.Row="3" BorderBrush="Indigo" BorderThickness="3">
+                        <Grid Grid.Column="1" Grid.Row="1">
+                            <TextBlock Text="40" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </Border>
+        </Grid>
+
         <!-- Zawartość strony -->
-        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" FontWeight="Bold" Foreground="White">
+        <!--<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" FontWeight="Bold" Foreground="White">
             A więc walka!
-        </TextBlock>
+        </TextBlock>-->
 
     </Grid>
 </UserControl>

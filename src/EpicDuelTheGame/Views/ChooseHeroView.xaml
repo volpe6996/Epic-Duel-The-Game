@@ -4,7 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:EpicDuelTheGame.Views"
-             xmlns:viewModels="clr-namespace:EpicDuelTheGame.ViewModels"
+             xmlns:viewModels="clr-namespace:EpicDuelTheGame.ViewModels" 
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d"
              d:DesignHeight="800" d:DesignWidth="1280">
     <Grid RenderOptions.EdgeMode="Aliased">
@@ -46,63 +48,104 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!--USER COLUMN-->
+        <!--USER COLUMNS-->
+        <!--CHOOSED USER HERO INFO-->
 
-        <Border Grid.Column="0" 
-                Grid.RowSpan="2" BorderThickness="2" BorderBrush="Green">
-            <Grid 
-                Grid.Column="0" 
-                Grid.RowSpan="2">
+        <Grid Grid.Column="0" Grid.RowSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="4*"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="2*"/>
-                    <RowDefinition Height="4*"/>
+                    <RowDefinition Height="12*"/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <Border BorderThickness="2" BorderBrush="DarkBlue">
-                    <StackPanel 
-                Grid.Row="0"
-                HorizontalAlignment="Center"
-                Margin="0,10">
-                        <Image 
-                    Source="{Binding SelectedUserImage.Path}"
-                    Width="172" 
-                    Height="172" 
-                    Stretch="Fill"/>
-                        <Label
-                    HorizontalAlignment="Center"
-                    Content="{Binding HeroHeader}"/>
-                    </StackPanel>
-                </Border>
-            </Grid>
-        </Border>
 
-        <!--<ItemsControl 
-                x:Name="userItemsControl"
-                Grid.Column="1"
-                ItemsSource="{Binding Images}"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel Orientation="Vertical"/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Button
-                        Command="{Binding DataContext.UserImageClickedCommand, ElementName=userItemsControl}"
-                        CommandParameter="{Binding}"
-                        Margin="0,5">
-                        <Button.Content>
-                            <Image 
-                                Source="{Binding Path}" 
-                                Width="155" 
-                                Height="155" 
-                                Stretch="Fill"/>
-                        </Button.Content>
-                    </Button>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>-->
+                <Image
+                    Grid.Column="1"
+                    Grid.Row="0"
+                    Source="{Binding SelectedHeroUser.Path}"
+                    Width="auto" 
+                    Height="auto" 
+                    Stretch="UniformToFill"
+                    Margin="0,10"
+                    VerticalAlignment="Center"/>
+
+                <xctk:WatermarkTextBox
+                    Visibility="{Binding UserTextBoxVisibility}"
+                    Grid.Column="1"
+                    Grid.Row="1"
+                    Watermark="Podaj nazwe bohatera"
+                    VerticalAlignment="Top"
+                    Text="{Binding UserEnterdName, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="6*"/>
+                </Grid.RowDefinitions>
+
+                <Label
+                    Grid.Row="0"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    Content="{Binding UserLabel}"
+                    Visibility="{Binding UserTextBoxVisibility}"/>
+
+                <Grid Grid.Row="1" Visibility="{Binding UserTextBoxVisibility}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    
+                    <TextBlock 
+                        Grid.ColumnSpan="2" 
+                        Grid.Row="0" 
+                        Text="{Binding SelectedHeroUser.Description}"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"/>
+
+                    <Label Grid.Column="0" Grid.Row="1" Content="Zycie"/>
+                    <Label Grid.Column="1" Grid.Row="1" Content="{Binding SelectedHeroUser.Hp}"/>
+
+                    <Label Grid.Column="0" Grid.Row="2" Content="Sila"/>
+                    <Label Grid.Column="1" Grid.Row="2" Content="{Binding SelectedHeroUser.Strength}"/>
+
+                    <Label Grid.Column="0" Grid.Row="3" Content="Zrecznosc"/>
+                    <Label Grid.Column="1" Grid.Row="3" Content="{Binding SelectedHeroUser.Dexterity}"/>
+
+                    <Label Grid.Column="0" Grid.Row="4" Content="Inteligencja"/>
+                    <Label Grid.Column="1" Grid.Row="4" Content="{Binding SelectedHeroUser.Intelligence}"/>
+
+                    <Label Grid.Column="0" Grid.Row="5" Content="Obrona" Visibility="{Binding UserWarriorStatsVisibility}"/>
+                    <Label Grid.Column="1" Grid.Row="5" Content="{Binding SelectedHeroUser.Defence}"/>
+
+                    <Label Grid.Column="0" Grid.Row="5" Content="Szansa na leczenie" Visibility="{Binding UserSorcererStatsVisibility}"/>
+                    <Label Grid.Column="1" Grid.Row="5" Content="{Binding SelectedHeroUser.Healing}"/>
+
+                    <Label Grid.Column="0" Grid.Row="5" Content="Unik" Visibility="{Binding UserRangerStatsVisibility}"/>
+                    <Label Grid.Column="1" Grid.Row="5" Content="{Binding SelectedHeroUser.Dodge}"/>
+
+                </Grid>
+            </Grid>
+        </Grid>
+        
+        <!--USER HEROES BUTTONS-->
 
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
@@ -113,11 +156,11 @@
 
             <Button
                 Grid.Row="0"
-                Command="{Binding UserImageClickedCommand}"
-                CommandParameter="{Binding Images[0]}"
+                Command="{Binding UserHeroChoosedCommand}"
+                CommandParameter="{Binding Heroes[0]}"
                 Margin="15">
                 <Button.Content>
-                    <Image Source="{Binding Images[0].Path}" 
+                    <Image Source="{Binding Heroes[0].Path}" 
                                 Width="auto" 
                                 Height="auto" 
                                 Stretch="UniformToFill"/>
@@ -126,11 +169,11 @@
 
             <Button
                 Grid.Row="1"
-                Command="{Binding UserImageClickedCommand}"
-                CommandParameter="{Binding Images[1]}"
+                Command="{Binding UserHeroChoosedCommand}"
+                CommandParameter="{Binding Heroes[1]}"
                 Margin="15,0">
                 <Button.Content>
-                    <Image Source="{Binding Images[1].Path}" 
+                    <Image Source="{Binding Heroes[1].Path}" 
                                 Width="auto" 
                                 Height="auto" 
                                 Stretch="UniformToFill"/>
@@ -139,11 +182,11 @@
 
             <Button
                 Grid.Row="2"
-                Command="{Binding UserImageClickedCommand}"
-                CommandParameter="{Binding Images[2]}"
+                Command="{Binding UserHeroChoosedCommand}"
+                CommandParameter="{Binding Heroes[2]}"
                 Margin="15,15,15,0">
                 <Button.Content>
-                    <Image Source="{Binding Images[2].Path}" 
+                    <Image Source="{Binding Heroes[2].Path}" 
                                 Width="auto" 
                                 Height="auto" 
                                 Stretch="UniformToFill"/>
@@ -151,39 +194,9 @@
             </Button>
         </Grid>
 
-        <!--OPPONENT'S COLUMN-->
+        <!--OPPONENT COLUMNS-->
+        <!--OPPONENT HEROES BUTTONS-->
         
-        <!--<ItemsControl 
-            x:Name="opponentItemsControl"
-            Grid.Column="2"
-            ItemsSource="{Binding Images}"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel Orientation="Vertical"/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Grid>
-                        <Button
-                            Command="{Binding DataContext.OpponentImageClickedCommand, ElementName=opponentItemsControl}"
-                            CommandParameter="{Binding}"
-                            Margin="0,5">
-                            <Button.Content>
-                                <Image 
-                                Source="{Binding Path}" 
-                                Width="155" 
-                                Height="155" 
-                                Stretch="Fill"/>
-                            </Button.Content>
-                        </Button>
-                    </Grid>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>-->
-
         <Grid Grid.Column="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
@@ -193,104 +206,170 @@
 
             <Button
                 Grid.Row="0"
-                Command="{Binding OpponentImageClickedCommand}"
-                CommandParameter="{Binding Images[0]}"
+                Command="{Binding OpponentHeroChoosedCommand}"
+                CommandParameter="{Binding Heroes[0]}"
                 Margin="15">
                 <Button.Content>
-                    <Image Source="{Binding Images[0].Path}" 
-                                Width="auto" 
-                                Height="auto" 
-                                Stretch="UniformToFill"/>
+                    <Image 
+                        Source="{Binding Heroes[0].Path}" 
+                        Width="auto" 
+                        Height="auto" 
+                        Stretch="UniformToFill"/>
                 </Button.Content>
             </Button>
-
             <Button
                 Grid.Row="1"
-                Command="{Binding OpponentImageClickedCommand}"
-                CommandParameter="{Binding Images[1]}"
+                Command="{Binding OpponentHeroChoosedCommand}"
+                CommandParameter="{Binding Heroes[1]}"
                 Margin="15,0">
                 <Button.Content>
-                    <Image Source="{Binding Images[1].Path}" 
+                    <Image Source="{Binding Heroes[1].Path}" 
                                 Width="auto" 
                                 Height="auto" 
                                 Stretch="UniformToFill"/>
                 </Button.Content>
             </Button>
-
             <Button
                 Grid.Row="2"
-                Command="{Binding OpponentImageClickedCommand}"
-                CommandParameter="{Binding Images[2]}"
+                Command="{Binding OpponentHeroChoosedCommand}"
+                CommandParameter="{Binding Heroes[2]}"
                 Margin="15,15,15,0">
                 <Button.Content>
-                    <Image Source="{Binding Images[2].Path}" 
+                    <Image Source="{Binding Heroes[2].Path}" 
                                 Width="auto" 
                                 Height="auto" 
                                 Stretch="UniformToFill"/>
                 </Button.Content>
             </Button>
         </Grid>
+        
+        <!--CHOOSED OPPONENT HERO INFO-->
 
-        <Border Grid.Column="3" 
-                Grid.RowSpan="2" BorderThickness="2" BorderBrush="Green">
-            <Grid 
-                Grid.Column="3" 
-                Grid.RowSpan="2">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="2*"/>
-                    <RowDefinition Height="4*"/>
-                </Grid.RowDefinitions>
-                <Border BorderThickness="2" BorderBrush="DarkBlue">
-                    <StackPanel 
-                        Grid.Row="0"
-                        HorizontalAlignment="Center"
-                        Margin="0,10">
-                        <Image 
-                            Source="{Binding SelectedOpponentImage.Path}"
-                            Width="172" 
-                            Height="172" 
-                            Stretch="Fill"/>
-                            <Label
-                                HorizontalAlignment="Center"
-                                Content="{Binding OpponentHeader}"/>
-                    </StackPanel>
-                </Border>
-            </Grid>
-        </Border>
+        <Grid Grid.Column="3" Grid.RowSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="4*"/>
+            </Grid.RowDefinitions>
 
-        <!--<Grid 
-            Grid.Column="3" 
-            Grid.RowSpan="2"
-            Margin="0,0,55,0">
-            <Grid>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="2*"/>
-                    <RowDefinition Height="4*"/>
+                    <RowDefinition Height="12*"/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <StackPanel 
+
+                <Image
+                    Grid.Column="1"
                     Grid.Row="0"
-                    HorizontalAlignment="Center"
-                    Margin="0,10">
-                    <Image 
-                        Source="{Binding SelectedOpponentImage.Path}"
-                        Width="172" 
-                        Height="172" 
-                        Stretch="Fill"/>
-                    <Label
-                            HorizontalAlignment="Center"
-                            Content="{Binding OpponentHeader}"/>
-                </StackPanel>
-            </Grid>
-        </Grid>-->
+                    Source="{Binding SelectedHeroOpponent.Path}"
+                    Width="auto" 
+                    Height="auto" 
+                    Stretch="UniformToFill"
+                    Margin="0,10"
+                    VerticalAlignment="Center"/>
 
-        <Button
-             Grid.Column="1"
-             Grid.Row="1"
-             Grid.ColumnSpan="2"
-             Width="350" 
-             Height="75" 
-             FontSize="18" 
-             Content="Napierdalamy sie" 
-             Command="{Binding NavigateGameViewCommand}"/> 
+                <xctk:WatermarkTextBox
+                    Visibility="{Binding OpponentTextBoxVisibility}"
+                    Grid.Column="1"
+                    Grid.Row="1"
+                    Watermark="Podaj nazwe bohatera" 
+                    VerticalAlignment="Top"
+                    Text="{Binding OpponentEnterdName, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="6*"/>
+                </Grid.RowDefinitions>
+
+                <Label
+                    Grid.Row="0"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    Content="{Binding OpponentLabel}"
+                    Visibility="{Binding OpponentTextBoxVisibility}"/>
+
+                <Grid Grid.Row="1" Visibility="{Binding OpponentTextBoxVisibility}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock 
+                        Grid.ColumnSpan="2" 
+                        Grid.Row="0" 
+                        Text="{Binding SelectedHeroOpponent.Description}"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"/>
+
+                    <Label Grid.Column="0" Grid.Row="1" Content="Zycie"/>
+                    <Label Grid.Column="1" Grid.Row="1" Content="{Binding SelectedHeroOpponent.Hp}"/>
+
+                    <Label Grid.Column="0" Grid.Row="2" Content="Sila"/>
+                    <Label Grid.Column="1" Grid.Row="2" Content="{Binding SelectedHeroOpponent.Strength}"/>
+
+                    <Label Grid.Column="0" Grid.Row="3" Content="Zrecznosc"/>
+                    <Label Grid.Column="1" Grid.Row="3" Content="{Binding SelectedHeroOpponent.Dexterity}"/>
+
+                    <Label Grid.Column="0" Grid.Row="4" Content="Inteligencja"/>
+                    <Label Grid.Column="1" Grid.Row="4" Content="{Binding SelectedHeroOpponent.Intelligence}"/>
+
+                    <Label Grid.Column="0" Grid.Row="5" Content="Obrona" Visibility="{Binding OpponentWarriorStatsVisibility}"/>
+                    <Label Grid.Column="1" Grid.Row="5" Content="{Binding SelectedHeroOpponent.Defence}"/>
+
+                    <Label Grid.Column="0" Grid.Row="5" Content="Szansa na leczenie" Visibility="{Binding OpponentSorcererStatsVisibility}"/>
+                    <Label Grid.Column="1" Grid.Row="5" Content="{Binding SelectedHeroOpponent.Healing}"/>
+
+                    <Label Grid.Column="0" Grid.Row="5" Content="Unik" Visibility="{Binding OpponentRangerStatsVisibility}"/>
+                    <Label Grid.Column="1" Grid.Row="5" Content="{Binding SelectedHeroOpponent.Dodge}"/>
+
+                </Grid>
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="7*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.3*"/>
+                <RowDefinition Height="1.5*"/>
+                <RowDefinition Height="0.15*"/>
+                <RowDefinition Height="0.8*"/>
+                <RowDefinition Height="0.3*"/>
+            </Grid.RowDefinitions>
+            <Button
+                Name="ToGameView"
+                Grid.Column="1"
+                Grid.Row="1"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                FontSize="18" 
+                Content="Walka!"
+                Command="{Binding StartTheGameCommand}">
+            </Button>
+            <Button
+                Grid.Column="1"
+                Grid.Row="3"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                FontSize="16" 
+                Content="Wroc do menu"
+                Command="{Binding NavigateStartViewCommand}"/>
+        </Grid>
     </Grid>
 </UserControl>

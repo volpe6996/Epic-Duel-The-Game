@@ -1,0 +1,20 @@
+﻿EpicDuelTheGame
+1.0.0.0
+
+winexe
+C#
+.cs
+E:\Visual Studio 2022\VS Projects\EpicDuelTheGame\src\EpicDuelTheGame\obj\Release\net7.0-windows\
+EpicDuelTheGame
+none
+false
+TRACE;RELEASE;NET;NET7_0;NETCOREAPP
+E:\Visual Studio 2022\VS Projects\EpicDuelTheGame\src\EpicDuelTheGame\App.xaml
+4-1485614142
+
+24-998446780
+204-563566446
+MainWindow.xaml;Views\ChooseHeroView.xaml;Views\GameView.xaml;Views\StartView.xaml;
+
+True
+

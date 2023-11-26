@@ -1,49 +1,34 @@
-using ConsoleTextGame.Abstract;
 using System;
 
 namespace EpicDuelTheGame.Models;
 
-public class Warrior : Hero, IManipulateStats
+public class Warrior : Hero
 {
-    public int Defence { get; set; }
-
-    public Warrior(string name)
+    private int _defence;
+    public int Defence
     {
-        Init(name, 50, 35, 25, 20, 40);
+        get { return _defence; }
+        set
+        {
+            _defence = value;
+            OnPropertyChanged(nameof(Defence));
+        }
     }
 
-    private void Init(string name, int hp, int strength, int dexterity, int intelligence, int defence)
+    public Warrior(string name, string description, string path) : base(name, description, path)
     {
-        this.Name = name;
-        this.Hp = hp;
-        this.Strength = strength;
-        this.Dexterity = dexterity;
-        this.Intelligence = intelligence;
-        this.Defence = defence;
+        this.Name = name == "" ? "Warrior" : name;
+        Init(50, 35, 25, 20, 50, 40);
     }
 
-    public void UpHp()
+    protected override void Init(int hp, int strength, int dexterity, int intelligence, int mana)
     {
-        throw new NotImplementedException();
+        base.Init(hp, strength, dexterity, intelligence, mana);
     }
 
-    public void UpStrength()
+    protected void Init(int hp, int strength, int dexterity, int intelligence, int mana, int defence)
     {
-        throw new NotImplementedException();
-    }
-
-    public void UpDexterity()
-    {
-        throw new NotImplementedException();
-    }
-
-    public void UpIntelligence()
-    {
-        throw new NotImplementedException();
-    }
-
-    public void UpDefence()
-    {
-        
+        Defence = defence;
+        this.Init(hp, strength, dexterity, intelligence, mana);
     }
 }

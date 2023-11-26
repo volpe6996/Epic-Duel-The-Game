@@ -19,4 +19,13 @@
       <Resource Include="images\poziomka.jpg" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Abstract\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Extended.Wpf.Toolkit" Version="4.5.1" />
+      <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.77" />
+    </ItemGroup>
+
 </Project>

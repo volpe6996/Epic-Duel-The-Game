@@ -1,8 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "hKewCfSTCz97t70Kf+WX3O9Z08Z3u+ArBR/dgVrfP90lOoj/LEdh90IjGd8RvfHbJByalfEBVUFxHIYzIg0fWg==",
+  "dgSpecHash": "YkHrgqAGs4+W2cosssxPDH7GZXpTPiMVaOA23fM0hYWhvindA/R4rHY8RUk+P7qb6wbHJmGyWMAy6eZmLMFvIg==",
   "success": true,
   "projectFilePath": "E:\\Visual Studio 2022\\VS Projects\\EpicDuelTheGame\\src\\EpicDuelTheGame\\EpicDuelTheGame.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\Macie\\.nuget\\packages\\extended.wpf.toolkit\\4.5.1\\extended.wpf.toolkit.4.5.1.nupkg.sha512",
+    "C:\\Users\\Macie\\.nuget\\packages\\microsoft.xaml.behaviors.wpf\\1.1.77\\microsoft.xaml.behaviors.wpf.1.1.77.nupkg.sha512"
+  ],
   "logs": []
 }

@@ -1,49 +1,35 @@
-using ConsoleTextGame.Abstract;
 using System;
+using System.Xml.Linq;
 
 namespace EpicDuelTheGame.Models;
 
-public class Sorcerer : Hero, IManipulateStats
+public class Sorcerer : Hero
 {
-    public int Healing { get; set; }
+    private int _healing;
+    public int Healing
+    {
+        get { return _healing; }
+        set 
+        {
+            _healing = value;
+            OnPropertyChanged(nameof(Healing));
+        }
+    }
     
-    public Sorcerer(string name)
+    public Sorcerer(string name, string description, string path) : base(name, description, path)
     {
-        Init(name, 30, 40, 30, 30, 15);
+        this.Name = name == "" ? "Sorcerer" : name;
+        Init(30, 40, 30, 30, 50, 15);
     }
 
-    private void Init(string name, int hp, int strength, int dexterity, int intelligence, int healing)
+    protected override void Init(int hp, int strength, int dexterity, int intelligence, int mana)
     {
-        this.Name = name;
-        this.Hp = hp;
-        this.Strength = strength;
-        this.Dexterity = dexterity;
-        this.Intelligence = intelligence;
-        this.Healing = healing;
+        base.Init(hp, strength, dexterity, intelligence, mana);
     }
 
-    public void UpHp()
+    protected void Init(int hp, int strength, int dexterity, int intelligence, int mana, int healing)
     {
-        throw new NotImplementedException();
-    }
-
-    public void UpStrength()
-    {
-        throw new NotImplementedException();
-    }
-
-    public void UpDexterity()
-    {
-        throw new NotImplementedException();
-    }
-
-    public void UpIntelligence()
-    {
-        throw new NotImplementedException();
-    }
-
-    public void UpHealing()
-    {
-        
+        Healing = healing;
+        this.Init(hp, strength, dexterity, intelligence, mana);
     }
 }

@@ -13,75 +13,246 @@ public class ChooseHeroViewModel : ViewModelBase
 {
     private readonly NavigationStore _navigationStore;
 
+    private ObservableCollection<Hero> _heroes;
+    public ObservableCollection<Hero> Heroes
+    {
+        get { return _heroes; }
+        set
+        {
+            if (_heroes != value)
+                _heroes = value;
+        }
+    }
+
+    // user related fields & properties
+
+    private Hero _selectedHeroUser;
+    public Hero SelectedHeroUser
+    {
+        get { return _selectedHeroUser; }
+        set
+        {
+            _selectedHeroUser = value;
+            OnPropertyChanged(nameof(SelectedHeroUser));
+
+            UserTextBoxVisibility = "Visible";
+
+            if (SelectedHeroUser.GetType() == typeof(Warrior))
+            {
+                UserWarriorStatsVisibility = "Visible";
+                UserSorcererStatsVisibility = "Hidden";
+                UserRangerStatsVisibility = "Hidden";
+            }
+            else if (SelectedHeroUser.GetType() == typeof(Sorcerer))
+            {
+                UserWarriorStatsVisibility = "Hidden";
+                UserSorcererStatsVisibility = "Visible";
+                UserRangerStatsVisibility = "Hidden";
+            }
+            else if (SelectedHeroUser.GetType() == typeof(Ranger))
+            {
+                UserWarriorStatsVisibility = "Hidden";
+                UserSorcererStatsVisibility = "Hidden";
+                UserRangerStatsVisibility = "Visible";
+            }
+        }
+    }
+
+    private string _userTextBoxVisibility = "Hidden";
+    public string UserTextBoxVisibility
+    {
+        get { return _userTextBoxVisibility; }
+        set
+        {
+            _userTextBoxVisibility = value;
+            OnPropertyChanged(nameof(UserTextBoxVisibility));
+        }
+    }
+
+    private string? _userEnterdName = null;
+    public string UserEnterdName
+    {
+        get { return _userEnterdName; }
+        set
+        {
+            _userEnterdName = value;
+            OnPropertyChanged(nameof(UserEnterdName));
+
+            UserLabel = $"Twoim przeciwnikiem jest {value}";
+        }
+    }
+
+    private string _userLabel;
+    public string UserLabel
+    {
+        get { return _userLabel; }
+        set
+        {
+            _userLabel = value;
+            OnPropertyChanged(nameof(UserLabel));
+        }
+    }
+
+    private string _userWarriorStatsVisibility = "Hidden";
+    public string UserWarriorStatsVisibility
+    {
+        get { return _userWarriorStatsVisibility; }
+        set
+        {
+            _userWarriorStatsVisibility = value;
+            OnPropertyChanged(nameof(UserWarriorStatsVisibility));
+        }
+    }
+
+    private string _userSorcererStatsVisibility = "Hidden";
+    public string UserSorcererStatsVisibility
+    {
+        get { return _userSorcererStatsVisibility; }
+        set
+        {
+            _userSorcererStatsVisibility = value;
+            OnPropertyChanged(nameof(UserSorcererStatsVisibility));
+        }
+    }
+
+    private string _userRangerStatsVisibility = "Hidden";
+    public string UserRangerStatsVisibility
+    {
+        get { return _userRangerStatsVisibility; }
+        set
+        {
+            _userRangerStatsVisibility = value;
+            OnPropertyChanged(nameof(UserRangerStatsVisibility));
+        }
+    }
+
+    // opponent related fields & properties
+
+    private Hero _selectedHeroOpponent;
+    public Hero SelectedHeroOpponent
+    {
+        get { return _selectedHeroOpponent; }
+        set 
+        {
+            _selectedHeroOpponent = value;
+            OnPropertyChanged(nameof(SelectedHeroOpponent));
+
+            OpponentTextBoxVisibility = "Visible";
+
+            if (SelectedHeroOpponent.GetType() == typeof(Warrior))
+            {
+                OpponentWarriorStatsVisibility = "Visible";
+                OpponentSorcererStatsVisibility = "Hidden";
+                OpponentRangerStatsVisibility = "Hidden";
+            }
+            else if (SelectedHeroOpponent.GetType() == typeof(Sorcerer))
+            {
+                OpponentWarriorStatsVisibility = "Hidden";
+                OpponentSorcererStatsVisibility = "Visible";
+                OpponentRangerStatsVisibility = "Hidden";
+            }
+            else if (SelectedHeroOpponent.GetType() == typeof(Ranger))
+            {
+                OpponentWarriorStatsVisibility = "Hidden";
+                OpponentSorcererStatsVisibility = "Hidden";
+                OpponentRangerStatsVisibility = "Visible";
+            }
+        }
+    }
+
+    private string _opponentTextBoxVisibility = "Hidden";
+    public string OpponentTextBoxVisibility
+    {
+        get{ return _opponentTextBoxVisibility; }
+        set 
+        {
+            _opponentTextBoxVisibility = value;
+            OnPropertyChanged(nameof(OpponentTextBoxVisibility));
+        }
+    }
+
+    private string _opponentEnterdName;
+    public string OpponentEnterdName
+    {
+        get { return _opponentEnterdName; }
+        set
+        {
+            _opponentEnterdName = value;
+            OnPropertyChanged(nameof(OpponentEnterdName));
+
+            OpponentLabel = $"Twoim przeciwnikiem jest {value}";
+        }
+    }
+
+    private string? _opponentLabel = null;
+    public string OpponentLabel
+    {
+        get { return _opponentLabel; }
+        set
+        {
+            _opponentLabel = value;
+            OnPropertyChanged(nameof(OpponentLabel));
+        }
+    }
+
+    private string _opponentWarriorStatsVisibility = "Hidden";
+    public string OpponentWarriorStatsVisibility
+    {
+        get { return _opponentWarriorStatsVisibility; }
+        set 
+        {
+            _opponentWarriorStatsVisibility = value;
+            OnPropertyChanged(nameof(OpponentWarriorStatsVisibility));
+        }
+    }
+
+    private string _opponentSorcererStatsVisibility = "Hidden";
+    public string OpponentSorcererStatsVisibility
+    {
+        get { return _opponentSorcererStatsVisibility; }
+        set
+        {
+            _opponentSorcererStatsVisibility = value;
+            OnPropertyChanged(nameof(OpponentSorcererStatsVisibility));
+        }
+    }
+
+    private string _opponentRangerStatsVisibility = "Hidden";
+    public string OpponentRangerStatsVisibility
+    {
+        get { return _opponentRangerStatsVisibility; }
+        set
+        {
+            _opponentRangerStatsVisibility = value;
+            OnPropertyChanged(nameof(OpponentRangerStatsVisibility));
+        }
+    }
+
     public ICommand NavigateGameViewCommand { get; }
+    public ICommand NavigateStartViewCommand { get; }
 
-    public ICommand UserImageClickedCommand { get; }
-    public ICommand OpponentImageClickedCommand { get; }
+    public ICommand StartTheGameCommand { get; }
 
-    private HeroImageModel _selectedUserImage;
-    public HeroImageModel SelectedUserImage
-    {
-        get { return _selectedUserImage; }
-        set
-        {
-            if (_selectedUserImage != value)
-            {
-                _selectedUserImage = value;
-                OnPropertyChanged(nameof(SelectedUserImage));
-
-                HeroHeader = $"Your hero is {SelectedUserImage.HeroName}";
-                OnPropertyChanged(nameof(HeroHeader));
-            }
-        }
-    }
-
-    private HeroImageModel _selectedOpponentImage;
-    public HeroImageModel SelectedOpponentImage
-    {
-        get { return _selectedOpponentImage; }
-        set
-        {
-            if (_selectedOpponentImage != value)
-            {
-                _selectedOpponentImage = value;
-                OnPropertyChanged(nameof(SelectedOpponentImage));
-
-                OpponentHeader = $"Your opponent's hero is {SelectedOpponentImage.HeroName}";
-                OnPropertyChanged(nameof(OpponentHeader));
-            }
-        }
-    }
-
-    public string HeroHeader { get; set; }
-    public string OpponentHeader { get; set; }
-
-    private ObservableCollection<HeroImageModel> _images;
-    public ObservableCollection<HeroImageModel> Images
-    {
-        get { return _images; }
-        set
-        {
-            if (_images != value)
-                _images = value;
-        }
-    }
+    public ICommand UserHeroChoosedCommand { get; }
+    public ICommand OpponentHeroChoosedCommand { get; }
 
     public ChooseHeroViewModel(NavigationStore navigationStore)
     {
         _navigationStore = navigationStore;
 
-        NavigateGameViewCommand = new NavigateCommand<GameViewModel>(
-            new NavigationService<GameViewModel>(navigationStore, () => new GameViewModel(navigationStore)));
+        NavigateGameViewCommand = new NavigateCommand<GameViewModel>(new NavigationService<GameViewModel>(navigationStore, () => new GameViewModel(navigationStore, this)));
+        NavigateStartViewCommand = new NavigateCommand<StartViewModel>(new NavigationService<StartViewModel>(navigationStore, () => new StartViewModel(navigationStore)));
 
-        Images = new ObservableCollection<HeroImageModel>
+        Heroes = new ObservableCollection<Hero>
         {
-            new HeroImageModel { HeroName="Poziomka", Path = "/images/poziomka.jpg" },
-            new HeroImageModel { HeroName="Piston", Path = "/images/piston.jpg" },
-            new HeroImageModel { HeroName="Menel", Path = "/images/menel.jpg" },
+            new Warrior("", "Jakiœ super opis Warriora, mojego niepokonanego bohatera", "/images/poziomka.jpg"),
+            new Sorcerer("", "Jakiœ super opis Sorcerera, mojego niepokonanego bohatera", "/images/piston.jpg"),
+            new Ranger("", "Jakiœ super opis Rangera, mojego niepokonanego bohatera", "/images/menel.jpg"),
         };
 
-        // sprawdziæ czy damy radê sensownie to po³¹czyæ
-        UserImageClickedCommand = new UserImageClickedCommand(this);
-        OpponentImageClickedCommand = new OpponentImageClickedCommand(this);
+        UserHeroChoosedCommand = new HeroChoosedCommand(this, "User");
+        OpponentHeroChoosedCommand = new HeroChoosedCommand(this, "Opponent");
+
+        StartTheGameCommand = new StartTheGameCommand(this, navigationStore);
     }
 }
