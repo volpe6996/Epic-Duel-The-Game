@@ -115,16 +115,16 @@
 
                     <Border Grid.Column="1" Grid.Row="1" BorderBrush="
                             Blue" BorderThickness="1">
-                        <Button Content="Menu" Command="{Binding NavigateeStartViewCommand}"/>
+                        <Button Content="Menu" Command="{Binding NavigateToStartViewCommand}"/>
                     </Border>
                     <Border Grid.Column="3" Grid.Row="1" BorderBrush="Red" BorderThickness="1">
-                        <Button Content="Menu"/>
+                        <Button Content="Save"/>
                     </Border>
                 </Grid>
             </Grid>
             <Border Grid.Column="1" BorderBrush="Green" BorderThickness="2">
                 <Grid Grid.Column="1">
-
+                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Red" FontSize="16" Text="{Binding UserLog}"/>
                 </Grid>
             </Border>
         </Grid>
@@ -153,13 +153,13 @@
                     </Grid.RowDefinitions>
 
                     <Border Grid.Column="1" Grid.Row="1" BorderBrush="Red" BorderThickness="1">
-                        <Button Content="Atak słaby"/>
+                        <Button Content="Atak słaby" Command="{Binding UserAttacksCommand}" CommandParameter="Weak"/>
                     </Border>
                     <Border Grid.Column="1" Grid.Row="3" BorderBrush="Red" BorderThickness="1">
-                        <Button Content="Atak mocny"/>
+                        <Button Content="Atak mocny" Command="{Binding UserAttacksCommand}" CommandParameter="Strong"/>
                     </Border>
                     <Border Grid.Column="1" Grid.Row="5" BorderBrush="Red" BorderThickness="1">
-                        <Button Content="Ult"/>
+                        <Button Content="Ult" Command="{Binding UserAttacksCommand}" CommandParameter="Ult"/>
                     </Border>
                 </Grid>
             </Border>
@@ -169,6 +169,8 @@
                         <RowDefinition Height="10*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding UserHero.Name}"/>
                 </Grid>
             </Border>
             <Border Grid.Column="2" BorderBrush="Orange" BorderThickness="2">
@@ -219,14 +221,28 @@
 
                     <Border Grid.Column="1" Grid.Row="1" BorderBrush="Magenta" BorderThickness="3">
                         <Grid>
-                            <ProgressBar Value="66" Foreground="Red" />
-                            <TextBlock Text="HP" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <ProgressBar Name="UserHpBar"  Value="{Binding UserHero.Hp, Mode=OneWay}" Maximum="80" Foreground="Red" />
+                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black" FontSize="18">
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}HP {0}/{1}">
+                                        <Binding Path="Value" ElementName="UserHpBar" />
+                                        <Binding Path="Maximum" ElementName="UserHpBar" />
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
                         </Grid>
                     </Border>
                     <Border Grid.Column="1" Grid.Row="3" BorderBrush="Magenta" BorderThickness="3">
                         <Grid>
-                            <ProgressBar Value="88" Foreground="DeepSkyBlue" />
-                            <TextBlock Text="MANA" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <ProgressBar Name="UserManaBar"  Value="{Binding UserHero.Mana, Mode=OneWay}" Maximum="120" Foreground="DeepSkyBlue" />
+                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black" FontSize="18">
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}MANA {0}/{1}">
+                                        <Binding Path="Value" ElementName="UserManaBar" />
+                                        <Binding Path="Maximum" ElementName="UserManaBar" />
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
                         </Grid>
                     </Border>
                 </Grid>
@@ -250,13 +266,30 @@
 
                     <Border Grid.Column="1" Grid.Row="1" BorderBrush="Indigo" BorderThickness="3">
                         <Grid Grid.Column="1" Grid.Row="1">
-                            <TextBlock Text="Inteligencja" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <Button 
+                                Background="Transparent" 
+                                Command="{Binding UserUpIntelligenceCommand}">
+                                <StackPanel
+                                HorizontalAlignment="Center" 
+                                VerticalAlignment="Center">
+                                    <TextBlock 
+                                    Text="Inteligencja" 
+                                    HorizontalAlignment="Center" 
+                                    VerticalAlignment="Center"/>
+                                    <TextBlock
+                                    Foreground="red"
+                                    Text="zwieksz" 
+                                    FontSize="10" 
+                                    HorizontalAlignment="Center" 
+                                    VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
                         </Grid>
                     </Border>
 
                     <Border Grid.Column="3" Grid.Row="1" BorderBrush="Indigo" BorderThickness="3">
                         <Grid Grid.Column="1" Grid.Row="1" >
-                            <TextBlock Text="80" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <TextBlock Text="{Binding UserHero.Intelligence}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Grid>
                     </Border>
 
@@ -268,7 +301,7 @@
 
                     <Border Grid.Column="3" Grid.Row="3" BorderBrush="Indigo" BorderThickness="3">
                         <Grid Grid.Column="1" Grid.Row="1">
-                            <TextBlock Text="40" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <TextBlock Text="{Binding UserHero.Dexterity}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Grid>
                     </Border>
                 </Grid>
@@ -296,6 +329,10 @@
                         <RowDefinition Height="10*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
+
+                    <!--<TextBlock Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding OpponentHero.Name}"/>-->
+
+                    <TextBlock Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Turn}"/>
                 </Grid>
             </Border>
         </Grid>
@@ -320,7 +357,7 @@
                     </Grid.RowDefinitions>
 
                     <Border Grid.Column="1" Grid.Row="1" BorderBrush="Magenta" BorderThickness="3">
-                        <Grid>
+                        <!--<Grid>
                             <ProgressBar Value="66" Foreground="Red" />
                             <TextBlock Text="HP" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Grid>
@@ -329,6 +366,37 @@
                         <Grid>
                             <ProgressBar Value="88" Foreground="DeepSkyBlue" />
                             <TextBlock Text="MANA" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Grid>-->
+                        <Grid>
+                            <ProgressBar 
+                                Name="OpponentHpBar" 
+                                Value="{Binding OpponentHero.Hp, Mode=OneWay}" 
+                                Maximum="80" 
+                                Foreground="Red" />
+                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black" FontSize="18">
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}HP {0}/{1}">
+                                        <Binding Path="Value" ElementName="OpponentHpBar"/>
+                                        <Binding Path="Maximum" ElementName="OpponentHpBar" />
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                        </Grid>
+                    </Border>
+                    <Border Grid.Column="1" Grid.Row="3" BorderBrush="Magenta" BorderThickness="3">
+                        <Grid>
+                            <ProgressBar 
+                                Name="OpponentManaBar"  
+                                Value="{Binding OpponentHero.Mana, Mode=OneWay}"                    Maximum="120" 
+                                Foreground="DeepSkyBlue" />
+                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black" FontSize="18">
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}MANA {0}/{1}">
+                                        <Binding Path="Value" ElementName="OpponentManaBar" />
+                                        <Binding Path="Maximum" ElementName="OpponentManaBar" />
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
                         </Grid>
                     </Border>
                 </Grid>

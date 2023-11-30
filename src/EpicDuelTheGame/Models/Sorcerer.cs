@@ -5,18 +5,7 @@ namespace EpicDuelTheGame.Models;
 
 public class Sorcerer : Hero
 {
-    private int _healing;
-    public int Healing
-    {
-        get { return _healing; }
-        set 
-        {
-            _healing = value;
-            OnPropertyChanged(nameof(Healing));
-        }
-    }
-    
-    public Sorcerer(string name, string description, string path) : base(name, description, path)
+    public Sorcerer(string name) : base(name)
     {
         this.Name = name == "" ? "Sorcerer" : name;
         Init(30, 40, 30, 30, 50, 15);
@@ -31,5 +20,15 @@ public class Sorcerer : Hero
     {
         Healing = healing;
         this.Init(hp, strength, dexterity, intelligence, mana);
+    }
+
+    //public override int WeakDamage(Hero opponent)
+    //{
+    //    return base.WeakDamage(opponent);
+    //}
+
+    public override void WeakDamage(Hero opponent)
+    {
+        base.WeakDamage(opponent);
     }
 }

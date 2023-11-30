@@ -133,7 +133,7 @@
                     <Label Grid.Column="1" Grid.Row="4" Content="{Binding SelectedHeroUser.Intelligence}"/>
 
                     <Label Grid.Column="0" Grid.Row="5" Content="Obrona" Visibility="{Binding UserWarriorStatsVisibility}"/>
-                    <Label Grid.Column="1" Grid.Row="5" Content="{Binding SelectedHeroUser.Defence}"/>
+                    <Label Grid.Column="1" Grid.Row="5" Content="{Binding SelectedHeroUser.Counterattack}"/>
 
                     <Label Grid.Column="0" Grid.Row="5" Content="Szansa na leczenie" Visibility="{Binding UserSorcererStatsVisibility}"/>
                     <Label Grid.Column="1" Grid.Row="5" Content="{Binding SelectedHeroUser.Healing}"/>
@@ -153,14 +153,13 @@
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
-
             <Button
                 Grid.Row="0"
                 Command="{Binding UserHeroChoosedCommand}"
-                CommandParameter="{Binding Heroes[0]}"
+                CommandParameter="{Binding ChoosableHeros[0]}"
                 Margin="15">
                 <Button.Content>
-                    <Image Source="{Binding Heroes[0].Path}" 
+                    <Image Source="{Binding ChoosableHeros[0].Path}" 
                                 Width="auto" 
                                 Height="auto" 
                                 Stretch="UniformToFill"/>
@@ -170,10 +169,10 @@
             <Button
                 Grid.Row="1"
                 Command="{Binding UserHeroChoosedCommand}"
-                CommandParameter="{Binding Heroes[1]}"
+                CommandParameter="{Binding ChoosableHeros[1]}"
                 Margin="15,0">
                 <Button.Content>
-                    <Image Source="{Binding Heroes[1].Path}" 
+                    <Image Source="{Binding ChoosableHeros[1].Path}" 
                                 Width="auto" 
                                 Height="auto" 
                                 Stretch="UniformToFill"/>
@@ -183,10 +182,10 @@
             <Button
                 Grid.Row="2"
                 Command="{Binding UserHeroChoosedCommand}"
-                CommandParameter="{Binding Heroes[2]}"
+                CommandParameter="{Binding ChoosableHeros[2]}"
                 Margin="15,15,15,0">
                 <Button.Content>
-                    <Image Source="{Binding Heroes[2].Path}" 
+                    <Image Source="{Binding ChoosableHeros[2].Path}" 
                                 Width="auto" 
                                 Height="auto" 
                                 Stretch="UniformToFill"/>
@@ -203,15 +202,14 @@
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
-
             <Button
                 Grid.Row="0"
                 Command="{Binding OpponentHeroChoosedCommand}"
-                CommandParameter="{Binding Heroes[0]}"
+                CommandParameter="{Binding ChoosableHeros[0]}"
                 Margin="15">
                 <Button.Content>
                     <Image 
-                        Source="{Binding Heroes[0].Path}" 
+                        Source="{Binding ChoosableHeros[0].Path}" 
                         Width="auto" 
                         Height="auto" 
                         Stretch="UniformToFill"/>
@@ -220,10 +218,10 @@
             <Button
                 Grid.Row="1"
                 Command="{Binding OpponentHeroChoosedCommand}"
-                CommandParameter="{Binding Heroes[1]}"
+                CommandParameter="{Binding ChoosableHeros[1]}"
                 Margin="15,0">
                 <Button.Content>
-                    <Image Source="{Binding Heroes[1].Path}" 
+                    <Image Source="{Binding ChoosableHeros[1].Path}" 
                                 Width="auto" 
                                 Height="auto" 
                                 Stretch="UniformToFill"/>
@@ -232,10 +230,10 @@
             <Button
                 Grid.Row="2"
                 Command="{Binding OpponentHeroChoosedCommand}"
-                CommandParameter="{Binding Heroes[2]}"
+                CommandParameter="{Binding ChoosableHeros[2]}"
                 Margin="15,15,15,0">
                 <Button.Content>
-                    <Image Source="{Binding Heroes[2].Path}" 
+                    <Image Source="{Binding ChoosableHeros[2].Path}" 
                                 Width="auto" 
                                 Height="auto" 
                                 Stretch="UniformToFill"/>
@@ -327,7 +325,7 @@
                     <Label Grid.Column="1" Grid.Row="4" Content="{Binding SelectedHeroOpponent.Intelligence}"/>
 
                     <Label Grid.Column="0" Grid.Row="5" Content="Obrona" Visibility="{Binding OpponentWarriorStatsVisibility}"/>
-                    <Label Grid.Column="1" Grid.Row="5" Content="{Binding SelectedHeroOpponent.Defence}"/>
+                    <Label Grid.Column="1" Grid.Row="5" Content="{Binding SelectedHeroOpponent.Counterattack}"/>
 
                     <Label Grid.Column="0" Grid.Row="5" Content="Szansa na leczenie" Visibility="{Binding OpponentSorcererStatsVisibility}"/>
                     <Label Grid.Column="1" Grid.Row="5" Content="{Binding SelectedHeroOpponent.Healing}"/>

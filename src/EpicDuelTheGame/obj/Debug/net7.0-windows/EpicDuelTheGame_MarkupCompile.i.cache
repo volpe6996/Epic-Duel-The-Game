@@ -12,9 +12,9 @@ TRACE;DEBUG;NET;NET7_0;NETCOREAPP
 E:\Visual Studio 2022\VS Projects\EpicDuelTheGame\src\EpicDuelTheGame\App.xaml
 4-1485614142
 
-241932534457
+301990793770
 204-563566446
 MainWindow.xaml;Views\ChooseHeroView.xaml;Views\GameView.xaml;Views\StartView.xaml;
 
-False
+True
 

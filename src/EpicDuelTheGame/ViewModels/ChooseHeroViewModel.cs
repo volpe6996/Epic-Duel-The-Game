@@ -13,21 +13,21 @@ public class ChooseHeroViewModel : ViewModelBase
 {
     private readonly NavigationStore _navigationStore;
 
-    private ObservableCollection<Hero> _heroes;
-    public ObservableCollection<Hero> Heroes
+    private ObservableCollection<ChooseHeroModel> _choosableHeros;
+    public ObservableCollection<ChooseHeroModel> ChoosableHeros
     {
-        get { return _heroes; }
+        get { return _choosableHeros; }
         set
         {
-            if (_heroes != value)
-                _heroes = value;
+            if (_choosableHeros != value)
+                _choosableHeros = value;
         }
     }
 
     // user related fields & properties
 
-    private Hero _selectedHeroUser;
-    public Hero SelectedHeroUser
+    private ChooseHeroModel _selectedHeroUser;
+    public ChooseHeroModel SelectedHeroUser
     {
         get { return _selectedHeroUser; }
         set
@@ -37,19 +37,19 @@ public class ChooseHeroViewModel : ViewModelBase
 
             UserTextBoxVisibility = "Visible";
 
-            if (SelectedHeroUser.GetType() == typeof(Warrior))
+            if (SelectedHeroUser.HeroType == HeroTypes.Warrior)
             {
                 UserWarriorStatsVisibility = "Visible";
                 UserSorcererStatsVisibility = "Hidden";
                 UserRangerStatsVisibility = "Hidden";
             }
-            else if (SelectedHeroUser.GetType() == typeof(Sorcerer))
+            else if (SelectedHeroUser.HeroType == HeroTypes.Sorcerer)
             {
                 UserWarriorStatsVisibility = "Hidden";
                 UserSorcererStatsVisibility = "Visible";
                 UserRangerStatsVisibility = "Hidden";
             }
-            else if (SelectedHeroUser.GetType() == typeof(Ranger))
+            else if (SelectedHeroUser.HeroType == HeroTypes.Ranger)
             {
                 UserWarriorStatsVisibility = "Hidden";
                 UserSorcererStatsVisibility = "Hidden";
@@ -128,30 +128,30 @@ public class ChooseHeroViewModel : ViewModelBase
 
     // opponent related fields & properties
 
-    private Hero _selectedHeroOpponent;
-    public Hero SelectedHeroOpponent
+    private ChooseHeroModel _selectedHeroOpponent;
+    public ChooseHeroModel SelectedHeroOpponent
     {
         get { return _selectedHeroOpponent; }
-        set 
+        set
         {
             _selectedHeroOpponent = value;
             OnPropertyChanged(nameof(SelectedHeroOpponent));
 
             OpponentTextBoxVisibility = "Visible";
 
-            if (SelectedHeroOpponent.GetType() == typeof(Warrior))
+            if (SelectedHeroOpponent.HeroType == HeroTypes.Warrior)
             {
                 OpponentWarriorStatsVisibility = "Visible";
                 OpponentSorcererStatsVisibility = "Hidden";
                 OpponentRangerStatsVisibility = "Hidden";
             }
-            else if (SelectedHeroOpponent.GetType() == typeof(Sorcerer))
+            else if (SelectedHeroOpponent.HeroType == HeroTypes.Sorcerer)
             {
                 OpponentWarriorStatsVisibility = "Hidden";
                 OpponentSorcererStatsVisibility = "Visible";
                 OpponentRangerStatsVisibility = "Hidden";
             }
-            else if (SelectedHeroOpponent.GetType() == typeof(Ranger))
+            else if (SelectedHeroOpponent.HeroType == HeroTypes.Ranger)
             {
                 OpponentWarriorStatsVisibility = "Hidden";
                 OpponentSorcererStatsVisibility = "Hidden";
@@ -228,7 +228,6 @@ public class ChooseHeroViewModel : ViewModelBase
         }
     }
 
-    public ICommand NavigateGameViewCommand { get; }
     public ICommand NavigateStartViewCommand { get; }
 
     public ICommand StartTheGameCommand { get; }
@@ -240,14 +239,13 @@ public class ChooseHeroViewModel : ViewModelBase
     {
         _navigationStore = navigationStore;
 
-        NavigateGameViewCommand = new NavigateCommand<GameViewModel>(new NavigationService<GameViewModel>(navigationStore, () => new GameViewModel(navigationStore, this)));
         NavigateStartViewCommand = new NavigateCommand<StartViewModel>(new NavigationService<StartViewModel>(navigationStore, () => new StartViewModel(navigationStore)));
 
-        Heroes = new ObservableCollection<Hero>
+        ChoosableHeros = new ObservableCollection<ChooseHeroModel>
         {
-            new Warrior("", "Jakiœ super opis Warriora, mojego niepokonanego bohatera", "/images/poziomka.jpg"),
-            new Sorcerer("", "Jakiœ super opis Sorcerera, mojego niepokonanego bohatera", "/images/piston.jpg"),
-            new Ranger("", "Jakiœ super opis Rangera, mojego niepokonanego bohatera", "/images/menel.jpg"),
+            new ChooseHeroModel(HeroTypes.Warrior, "Jakiœ super opis Warriora, mojego niepokonanego bohatera", "/images/poziomka.jpg"),
+            new ChooseHeroModel(HeroTypes.Sorcerer, "Jakiœ super opis Sorcerera, mojego niepokonanego bohatera", "/images/piston.jpg"),
+            new ChooseHeroModel(HeroTypes.Ranger, "Jakiœ super opis Rangera, mojego niepokonanego bohatera", "/images/menel.jpg"),
         };
 
         UserHeroChoosedCommand = new HeroChoosedCommand(this, "User");

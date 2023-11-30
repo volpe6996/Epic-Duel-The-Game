@@ -23,9 +23,10 @@ namespace EpicDuelTheGame.Commands
         public override void Execute(object parameter)
         {
             if (_selectionDirection == "User")
-                _chooseHeroViewModel.SelectedHeroUser = parameter as Hero;
+                _chooseHeroViewModel.SelectedHeroUser = parameter as ChooseHeroModel;
             else if (_selectionDirection == "Opponent")
-                _chooseHeroViewModel.SelectedHeroOpponent = parameter as Hero;
+                _chooseHeroViewModel.SelectedHeroOpponent = parameter as ChooseHeroModel;
+
         }
     }
 }
