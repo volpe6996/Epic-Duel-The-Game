@@ -27,11 +27,6 @@ public class Warrior : Hero, IRandomAuthtorization
         Hp = setHpValue;
     }
 
-    //public new int UseUltimate(Hero opponent)
-    //{
-    //    return (int)(Counterattack * Intelligence);
-    //}
-
     //public override int UseUltimate()
     //{
     //    if(OperationAuthtorization((int)Counterattack) && Mana > 50)
@@ -43,42 +38,13 @@ public class Warrior : Hero, IRandomAuthtorization
     //    return 0;
     //}
 
-    //public override int WeakDamage(Hero opponent)
-    //{
-    //    return base.WeakDamage(opponent);
-    //}
-
     public override void WeakDamage(Hero opponent)
     {
         base.WeakDamage(opponent);
     }
 
-    //public override int StrongDamage(Hero opponent)
-    //{
-    //    if (OperationAuthtorization(Strength))
-    //        return (int)Math.Ceiling((decimal)(Strength / 2 + Intelligence / 4));
-
-    //    return 0;
-    //}
-
-    //public override int StrongDamage(Hero opponent)
-    //{
-    //    return base.StrongDamage(opponent);
-    //}
-
     public override void StrongDamage(Hero opponent)
     {
         base.StrongDamage(opponent);
     }
-
-    //public bool OperationAuthtorization(int factor)
-    //{
-    //    var rng = new Random();
-    //    var operationChance = Intelligence + factor * 3;
-    //    var rngNbr = rng.Next(0, 1000);
-
-    //    if (rngNbr > 0 && rngNbr < operationChance)
-    //        return true;
-    //    else return false;
-    //}
 }

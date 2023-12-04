@@ -116,50 +116,17 @@ public abstract class Hero : ClassBase, IHero, ILogger, IRandomAuthtorization
 
     public virtual void UseUltimate(Hero opponent) { }
 
-    //public virtual int WeakDamage(Hero opponent)
-    //{
-    //    Mana += 8;
-
-    //    // wysokosc zadanych obrazen = zadane obrazenia-zniejszone obrazenia 
-    //    var weakDamage = (int)Math.Ceiling((decimal)(Strength / 3 + Intelligence / 9)) - (int)Math.Ceiling((decimal)Dexterity / 8);
-    //    Log($"{this.Name} zdal {weakDamage} obrazen {opponent.Name}owi!(+8 many)");
-
-    //    return weakDamage;
-    //}
-
     public virtual void WeakDamage(Hero opponent)
     {
         Mana += 8;
 
         // wysokosc zadanych obrazen = zadane obrazenia-zniejszone obrazenia 
-        var weakDamage = (int)Math.Ceiling((decimal)(Strength / 3 + Intelligence / 9)) - (int)Math.Ceiling((decimal)Dexterity / 8);
+        var weakDamage = (int)Math.Ceiling((decimal)(Strength / 3 + Intelligence / 9)) - (int)Math.Ceiling((decimal)opponent.Dexterity / 8);
 
         opponent.Hp -= weakDamage;
 
         Log($"{this.Name} zdal {weakDamage} obrazen {opponent.Name}owi!(+8 many)");
     }
-
-    //public virtual int StrongDamage(Hero opponent)
-    //{
-    //    if (OperationAuthtorization(Strength) && Mana >= 20)
-    //    {
-    //        Mana -= 20;
-    //        var strongDamage = (int)Math.Ceiling((decimal)(Strength / 2 + Intelligence / 4));
-    //        Log($"{this.Name} zdal {strongDamage} obrazen {opponent.Name}owi(-20 many)");
-
-    //        return strongDamage;
-    //    }
-    //    else if(OperationAuthtorization(Strength) && Mana < 20)
-    //    {
-    //        Log($"Atak siê nie powiód³, za ma³o many!");
-    //        return 0;
-    //    }
-    //    else
-    //    {
-    //        Log($"Mocny atak siê nie powiód³!");
-    //        return 0;
-    //    }
-    //}
 
     public virtual void StrongDamage(Hero opponent)
     {
@@ -168,7 +135,7 @@ public abstract class Hero : ClassBase, IHero, ILogger, IRandomAuthtorization
         else if(OperationAuthtorization(Strength))
         {
             Mana -= 20;
-            var strongDamage = (int)Math.Ceiling((decimal)(Strength / 2 + Intelligence / 4));
+            var strongDamage = (int)Math.Ceiling((decimal)(Strength / 2 + Intelligence / 4)) - (int)Math.Ceiling((decimal)opponent.Dexterity / 8);
 
             opponent.Hp -= strongDamage;
 
@@ -204,10 +171,8 @@ public abstract class Hero : ClassBase, IHero, ILogger, IRandomAuthtorization
     {
         var rng = new Random();
         var upperRange = Intelligence + factor * 3;
-        var rngNbr = rng.Next(0, 700);
+        var rngNbr = rng.Next(0, 550);
 
-        if (rngNbr > 0 && rngNbr < upperRange)
-            return true;
-        else return false;
+        return rngNbr > 0 && rngNbr < upperRange;
     }
 }

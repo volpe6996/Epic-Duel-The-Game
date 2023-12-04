@@ -21,11 +21,6 @@ public class Ranger : Hero
         this.Init(hp, strength, dexterity, intelligence, mana);
     }
 
-    //public override int WeakDamage(Hero opponent)
-    //{
-    //    return base.WeakDamage(opponent);
-    //}
-
     public override void WeakDamage(Hero opponent)
     {
         base.WeakDamage(opponent);

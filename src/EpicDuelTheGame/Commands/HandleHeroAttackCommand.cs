@@ -14,16 +14,16 @@ namespace EpicDuelTheGame.Commands
         private readonly GameViewModel _gameViewModel;
         private Hero _attacker;
         private Hero _victim;
-        private int _turn;
+        private int _activeOnTurn;
 
-        public HandleHeroAttackCommand(GameViewModel gameViewModel, Hero attacker, Hero victim, int turn)
+        public HandleHeroAttackCommand(GameViewModel gameViewModel, Hero attacker, Hero victim, int activeOnTurn)
         {
             _gameViewModel = gameViewModel;
             _attacker = attacker;
             _victim = victim;
+            _activeOnTurn = activeOnTurn;
 
             gameViewModel.OnTurnChanged += OnTurnChanged;
-            _turn = turn;
         }
 
         public override void Execute(object parameter)
@@ -35,50 +35,18 @@ namespace EpicDuelTheGame.Commands
             else if (parameter.ToString() == "Ult")
                 _attacker.UseUltimate(_victim);
 
-
-            if (_gameViewModel.Turn == 0)
-                _gameViewModel.Turn = 1;
-            else
-                _gameViewModel.Turn = 0;
-
-            CanExecute(parameter);
+            // zmiana tury po ruchu
+            _gameViewModel.Turn = (_gameViewModel.Turn == 0) ? 1 : 0;
         }
 
         public override bool CanExecute(object parameter)
         {
-            if (_gameViewModel.Turn == 0 && _turn == 0)
-            {
-                return base.CanExecute(parameter);
-            }
-            else if (_gameViewModel.Turn != 0 || _turn != 0)
-            {
-                return false;
-            }
-
-            if (_gameViewModel.Turn == 1 && _turn == 1)
-            {
-                return base.CanExecute(parameter);
-            }
-            else if (_gameViewModel.Turn != 1 || _turn != 1)
-            {
-                return false;
-            }
-
-            return true;
+            return _gameViewModel.Turn == _activeOnTurn;
         }
 
         private void OnTurnChanged()
         {
-
-            if (_gameViewModel.Turn == 0 && _turn == 0)
-            {
-                OnCanExecuteChanged();
-            }
-
-            if (_gameViewModel.Turn == 1 && _turn == 1)
-            {
-                OnCanExecuteChanged();
-            }
+            OnCanExecuteChanged();
         }
     }
 }
