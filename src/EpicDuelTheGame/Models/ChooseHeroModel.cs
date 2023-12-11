@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EpicDuelTheGame.Models
+﻿namespace EpicDuelTheGame.Models
 {
     public class ChooseHeroModel
     {
@@ -56,12 +50,5 @@ namespace EpicDuelTheGame.Models
                 this.Dodge = 20;
             }
         }
-    }
-
-    public enum HeroTypes
-    {
-        Warrior,
-        Sorcerer,
-        Ranger
     }
 }

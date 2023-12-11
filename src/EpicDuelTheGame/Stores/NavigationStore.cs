@@ -1,5 +1,5 @@
-using System;
 using EpicDuelTheGame.ViewModels;
+using System;
 
 namespace EpicDuelTheGame.Stores;
 
@@ -14,7 +14,7 @@ public class NavigationStore
         {
             _currentViewModel = value;
             OnCurrentViewModelChanged();
-            
+
             // tez wersja alternatywna, zamiast voida ktory robi za fasade odrazu robimy invoke eventu
             // CurrentViewModelChanged?.Invoke();
         }

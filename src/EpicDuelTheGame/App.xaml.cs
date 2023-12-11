@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
-using EpicDuelTheGame.Stores;
+﻿using EpicDuelTheGame.Stores;
 using EpicDuelTheGame.ViewModels;
+using System.Windows;
 
 namespace EpicDuelTheGame
 {
@@ -22,7 +16,7 @@ namespace EpicDuelTheGame
                 DataContext = new MainViewModel(navigationStore)
             };
             MainWindow.Show();
-            
+
             base.OnStartup(e);
         }
     }

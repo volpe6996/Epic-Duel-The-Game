@@ -1,39 +1,59 @@
-﻿using EpicDuelTheGame.ViewModels;
+﻿using EpicDuelTheGame.Models;
+using EpicDuelTheGame.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace EpicDuelTheGame.Commands
 {
     public class HandleHeroOperationCommand : CommandBase
     {
-        private Action _operation;
         private readonly GameViewModel _gameViewModel;
+        private Func<bool> _operation = null;
+        private Func<Hero, bool> _operationWithParameter = null;
         private int _activeOnTurn;
+        private Hero _attacker;
+        private Hero _victim;
 
-        public HandleHeroOperationCommand(GameViewModel gameViewModel, Action operation, int activeOnTurn)
+        public HandleHeroOperationCommand(GameViewModel gameViewModel, Func<bool> operation, int activeOnTurn, Hero attacker, Hero victim)
         {
             _gameViewModel = gameViewModel;
             _operation = operation;
             _activeOnTurn = activeOnTurn;
+            _attacker = attacker;
+            _victim = victim;
 
             gameViewModel.OnTurnChanged += OnTurnChanged;
         }
 
-        public override void Execute(object parameter)
+        public HandleHeroOperationCommand(GameViewModel gameViewModel, Func<Hero, bool> operation, int activeOnTurn, Hero attacker, Hero victim)
         {
-            _operation.Invoke();
+            _gameViewModel = gameViewModel;
+            _operationWithParameter = operation;
+            _activeOnTurn = activeOnTurn;
+            _attacker = attacker;
+            _victim = victim;
 
-            // zmiana tury po ruchu
-            _gameViewModel.Turn = (_gameViewModel.Turn == 0) ? 1 : 0;
+            gameViewModel.OnTurnChanged += OnTurnChanged;
+        }
+
+        public override async void Execute(object parameter)
+        {
+            bool changeTurn;
+
+            await _attacker.CheckSpellStatus((Hero)parameter);
+            _victim.ClearLog();
+
+            if (_operation == null)
+                changeTurn = _operationWithParameter.Invoke((Hero)parameter);
+            else
+                changeTurn = _operation.Invoke();
+
+            _gameViewModel.Turn = (_gameViewModel.Turn == 0 && changeTurn) ? 1 : 0;
         }
 
         public override bool CanExecute(object parameter)
         {
-            return _gameViewModel.Turn == _activeOnTurn && _gameViewModel.UserHero.Mana >= 50;
+            return _gameViewModel.Turn == _activeOnTurn;
         }
 
         private void OnTurnChanged()

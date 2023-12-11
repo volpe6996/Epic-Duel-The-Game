@@ -1,11 +1,8 @@
-using EpicDuelTheGame.Abstract;
 using EpicDuelTheGame.Commands;
 using EpicDuelTheGame.Models;
 using EpicDuelTheGame.Services;
 using EpicDuelTheGame.Stores;
 using System;
-using System.CodeDom;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace EpicDuelTheGame.ViewModels;
@@ -27,7 +24,7 @@ public class GameViewModel : ViewModelBase
 
     private string _userLog;
     public string UserLog
-    { 
+    {
         get { return _userLog; }
         set
         {
@@ -59,11 +56,16 @@ public class GameViewModel : ViewModelBase
     }
 
     public ICommand NavigateToStartViewCommand { get; }
+
     public ICommand UserAttacksCommand { get; }
     public ICommand UserUpIntelligenceCommand { get; }
+    public ICommand UserUseFirstSpellCommand { get; }
+    public ICommand UserUseSecondSpellCommand { get; }
 
     public ICommand OpponentAttacksCommand { get; }
     public ICommand OpponentUpIntelligenceCommand { get; }
+    public ICommand OpponentUseFirstSpellCommand { get; }
+    public ICommand OpponentUseSecondSpellCommand { get; }
 
     private readonly AiDecisionPathService _aiDecisionPathService;
 
@@ -78,7 +80,7 @@ public class GameViewModel : ViewModelBase
             OnTurnChanged?.Invoke();
             OnPropertyChanged(nameof(Turn));
 
-            if(value == 1)
+            if (value == 1)
                 _aiDecisionPathService.Decide();
         }
     }
@@ -90,6 +92,8 @@ public class GameViewModel : ViewModelBase
         _navigationStore = navigationStore;
 
         _userHero = userHero;
+        //_userHero.Mana = 99999;
+        //_userHero.Hp = 99999;
         _userHero.LogEvent += HandleUserLogEvent;
 
         _opponentHero = opponentHero;
@@ -100,10 +104,14 @@ public class GameViewModel : ViewModelBase
         // USER - 0, AI - 1
 
         UserAttacksCommand = new HandleHeroAttackCommand(this, _userHero, _opponentHero, 0);
-        OpponentAttacksCommand = new HandleHeroAttackCommand(this, _opponentHero, _userHero, 1);
+        UserUpIntelligenceCommand = new HandleHeroOperationCommand(this, UserHero.UpIntelligence, 0, UserHero, OpponentHero);
+        UserUseFirstSpellCommand = new HandleHeroOperationCommand(this, UserHero.UseFirstSpell, 0, UserHero, OpponentHero);
+        UserUseSecondSpellCommand = new HandleHeroOperationCommand(this, UserHero.UseSecondSpell, 0, UserHero, OpponentHero);
 
-        UserUpIntelligenceCommand = new HandleHeroOperationCommand(this, UserHero.UpIntelligence, 0);
-        OpponentUpIntelligenceCommand = new HandleHeroOperationCommand(this, OpponentHero.UpIntelligence, 1);
+        OpponentAttacksCommand = new HandleHeroAttackCommand(this, _opponentHero, _userHero, 1);
+        OpponentUpIntelligenceCommand = new HandleHeroOperationCommand(this, OpponentHero.UpIntelligence, 1, OpponentHero, UserHero);
+        OpponentUseFirstSpellCommand = new HandleHeroOperationCommand(this, OpponentHero.UseFirstSpell, 1, OpponentHero, UserHero);
+        OpponentUseSecondSpellCommand = new HandleHeroOperationCommand(this, OpponentHero.UseSecondSpell, 1, OpponentHero, UserHero);
 
         _aiDecisionPathService = new AiDecisionPathService(this);
 

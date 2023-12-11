@@ -2,13 +2,6 @@
 using EpicDuelTheGame.Services;
 using EpicDuelTheGame.Stores;
 using EpicDuelTheGame.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 
 namespace EpicDuelTheGame.Commands
@@ -22,12 +15,18 @@ namespace EpicDuelTheGame.Commands
         private Hero SelectedHeroUser;
         private Hero SelectedHeroOpponent;
 
+        private readonly string _userHeroName;
+        private readonly string _opponentHeroName;
+
         private ICommand NavigateToGameViewCommand { set; get; }
 
         public StartTheGameCommand(ChooseHeroViewModel chooseHeroViewModel, NavigationStore navigationStore)
         {
             _chooseHeroViewModel = chooseHeroViewModel;
             _navigationStore = navigationStore;
+
+            _userHeroName = chooseHeroViewModel.UserEnterdName;
+            _opponentHeroName = chooseHeroViewModel.OpponentEnterdName;
         }
 
         public override void Execute(object parameter)
@@ -35,18 +34,18 @@ namespace EpicDuelTheGame.Commands
             if (_chooseHeroViewModel.SelectedHeroUser != null && _chooseHeroViewModel.SelectedHeroOpponent != null)
             {
                 if (_chooseHeroViewModel.SelectedHeroUser.HeroType == HeroTypes.Warrior)
-                    SelectedHeroUser = new Warrior(_chooseHeroViewModel.UserEnterdName);
-                else if(_chooseHeroViewModel.SelectedHeroUser.HeroType == HeroTypes.Sorcerer)
-                    SelectedHeroUser = new Sorcerer(_chooseHeroViewModel.UserEnterdName);
+                    SelectedHeroUser = new Hero(_chooseHeroViewModel.UserEnterdName, HeroTypes.Warrior);
+                else if (_chooseHeroViewModel.SelectedHeroUser.HeroType == HeroTypes.Sorcerer)
+                    SelectedHeroUser = new Hero(_chooseHeroViewModel.UserEnterdName, HeroTypes.Sorcerer);
                 else
-                    SelectedHeroUser = new Ranger(_chooseHeroViewModel.UserEnterdName);
+                    SelectedHeroUser = new Hero(_chooseHeroViewModel.UserEnterdName, HeroTypes.Ranger);
 
                 if (_chooseHeroViewModel.SelectedHeroOpponent.HeroType == HeroTypes.Warrior)
-                    SelectedHeroOpponent = new Warrior(_chooseHeroViewModel.OpponentEnterdName);
+                    SelectedHeroOpponent = new Hero(_chooseHeroViewModel.OpponentEnterdName, HeroTypes.Warrior);
                 else if (_chooseHeroViewModel.SelectedHeroOpponent.HeroType == HeroTypes.Sorcerer)
-                    SelectedHeroOpponent = new Sorcerer(_chooseHeroViewModel.OpponentEnterdName);
+                    SelectedHeroOpponent = new Hero(_chooseHeroViewModel.OpponentEnterdName, HeroTypes.Sorcerer);
                 else
-                    SelectedHeroOpponent = new Ranger(_chooseHeroViewModel.OpponentEnterdName);
+                    SelectedHeroOpponent = new Hero(_chooseHeroViewModel.OpponentEnterdName, HeroTypes.Ranger);
 
                 NavigateToGameViewCommand = new NavigateCommand<GameViewModel>(new NavigationService<GameViewModel>(_navigationStore, () => new GameViewModel(_navigationStore, SelectedHeroUser, SelectedHeroOpponent)));
                 NavigateToGameViewCommand.Execute(parameter);

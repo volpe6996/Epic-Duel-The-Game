@@ -1,11 +1,9 @@
-using System;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Windows.Input;
 using EpicDuelTheGame.Commands;
 using EpicDuelTheGame.Models;
 using EpicDuelTheGame.Services;
 using EpicDuelTheGame.Stores;
+using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace EpicDuelTheGame.ViewModels;
 
@@ -163,8 +161,8 @@ public class ChooseHeroViewModel : ViewModelBase
     private string _opponentTextBoxVisibility = "Hidden";
     public string OpponentTextBoxVisibility
     {
-        get{ return _opponentTextBoxVisibility; }
-        set 
+        get { return _opponentTextBoxVisibility; }
+        set
         {
             _opponentTextBoxVisibility = value;
             OnPropertyChanged(nameof(OpponentTextBoxVisibility));
@@ -199,7 +197,7 @@ public class ChooseHeroViewModel : ViewModelBase
     public string OpponentWarriorStatsVisibility
     {
         get { return _opponentWarriorStatsVisibility; }
-        set 
+        set
         {
             _opponentWarriorStatsVisibility = value;
             OnPropertyChanged(nameof(OpponentWarriorStatsVisibility));

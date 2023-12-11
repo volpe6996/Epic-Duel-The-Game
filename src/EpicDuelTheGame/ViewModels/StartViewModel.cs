@@ -1,7 +1,7 @@
-using System.Windows.Input;
 using EpicDuelTheGame.Commands;
 using EpicDuelTheGame.Services;
 using EpicDuelTheGame.Stores;
+using System.Windows.Input;
 
 namespace EpicDuelTheGame.ViewModels;
 
@@ -13,7 +13,7 @@ public class StartViewModel : ViewModelBase
     {
         // NavigateChooseHeroCommand = new NavigateCommand<ChooseHeroViewModel>(navigationStore, () => new ChooseHeroViewModel(navigationStore ));
 
-        NavigateChooseHeroCommand 
+        NavigateChooseHeroCommand
             = new NavigateCommand<ChooseHeroViewModel>(new NavigationService<ChooseHeroViewModel>(navigationStore, () => new ChooseHeroViewModel(navigationStore)));
     }
 }

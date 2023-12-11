@@ -2,9 +2,6 @@
 using EpicDuelTheGame.Models;
 using EpicDuelTheGame.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace EpicDuelTheGame.Services
@@ -20,15 +17,30 @@ namespace EpicDuelTheGame.Services
             _aiHero = gameViewModel.OpponentHero;
         }
 
-        public void Decide()
+        public async Task Decide()
         {
             //if(_gameViewModel.Turn == 1)
             //    _gameViewModel.OpponentAttacksCommand.Execute("Weak");
 
-            if(_aiHero.Mana >= 50 && OperationAuthtorization(65))
+            await Task.Delay(1750);
+
+            if (_aiHero.Mana >= 50 && OperationAuthtorization(50))
+                //_gameViewModel.OpponentUpIntelligenceCommand.Execute(_gameViewModel.UserHero);
                 _gameViewModel.OpponentUpIntelligenceCommand.Execute(null);
+            else if (_aiHero.Mana >= 50 && OperationAuthtorization(90))
+                _gameViewModel.OpponentAttacksCommand.Execute("Ult");
             else
                 _gameViewModel.OpponentAttacksCommand.Execute("Weak");
+
+            //if(!_aiHero.IsFirstSpellActive)
+            //    _gameViewModel.OpponentUseFirstSpellCommand.Execute(_gameViewModel.UserHero);
+            //else
+            //    _gameViewModel.OpponentAttacksCommand.Execute("Weak");
+
+            //_gameViewModel.OpponentAttacksCommand.Execute("Ult");
+
+            //_gameViewModel.OpponentAttacksCommand.Execute("Weak");
+
         }
 
         // skala 1%
