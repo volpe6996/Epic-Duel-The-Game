@@ -251,12 +251,9 @@
             <Setter Property="FontFamily" Value="{StaticResource ChakraPetchMedium}"/>
             <Setter Property="FontSize" Value="20"/>
             <Setter Property="Foreground" Value="#606060"/>
-            <!--<Setter Property="BorderBrush" Value="#7c86cc" />-->
-            <!--<Setter Property="BorderBrush" Value="#182694" />-->
             <Setter Property="BorderBrush" Value="#a0a0a0" />
             <Setter Property="BorderThickness" Value="3" />
             <Setter Property="Background" Value="Transparent"/>
-            <!--<Setter Property="Background" Value="#182694"/>-->
             <Style.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="15"/>
@@ -296,75 +293,7 @@
 				 </BeginStoryboard> 
 			 </EventTrigger> 
 		 </Grid.Triggers>-->
-
-		<!--<Grid.Background>
-			<LinearGradientBrush x:Name="AnimatedGradient" StartPoint="0,0" EndPoint="1,1">
-				<GradientStop Offset="0" Color="Red"/>
-				<GradientStop Offset="0.1" Color="Orange"/>
-				<GradientStop Offset="0.2" Color="Yellow"/>
-				<GradientStop Offset="0.3" Color="Green"/>
-				<GradientStop Offset="0.4" Color="Blue"/>
-				<GradientStop Offset="0.5" Color="Indigo"/>
-				<GradientStop Offset="0.6" Color="Violet"/>
-				<GradientStop Offset="0.7" Color="Purple"/>
-				<GradientStop Offset="0.8" Color="Pink"/>
-				<GradientStop Offset="1" Color="Red"/>
-			</LinearGradientBrush>
-		</Grid.Background>
-		<Grid.Triggers>
-			<EventTrigger RoutedEvent="Grid.Loaded">
-				<BeginStoryboard>
-					<Storyboard RepeatBehavior="Forever" Timeline.DesiredFrameRate="60" AutoReverse="True">
-						<ColorAnimation Storyboard.TargetProperty="(Panel.Background).(GradientBrush.GradientStops)[0].Color" 
-										To="Violet" Duration="0:0:2"/>
-						<ColorAnimation Storyboard.TargetProperty="(Panel.Background).(GradientBrush.GradientStops)[1].Color" 
-										To="Red" Duration="0:0:2"/>
-						<ColorAnimation Storyboard.TargetProperty="(Panel.Background).(GradientBrush.GradientStops)[2].Color" 
-										To="Orange" Duration="0:0:2"/>
-						<ColorAnimation Storyboard.TargetProperty="(Panel.Background).(GradientBrush.GradientStops)[3].Color" 
-										To="Yellow" Duration="0:0:2"/>
-						<ColorAnimation Storyboard.TargetProperty="(Panel.Background).(GradientBrush.GradientStops)[4].Color" 
-										To="Green" Duration="0:0:2"/>
-						<ColorAnimation Storyboard.TargetProperty="(Panel.Background).(GradientBrush.GradientStops)[5].Color" 
-										To="Blue" Duration="0:0:2"/>
-						<ColorAnimation Storyboard.TargetProperty="(Panel.Background).(GradientBrush.GradientStops)[6].Color" 
-										To="Indigo" Duration="0:0:2"/>
-						<ColorAnimation Storyboard.TargetProperty="(Panel.Background).(GradientBrush.GradientStops)[7].Color" 
-										To="Violet" Duration="0:0:2"/>
-						<ColorAnimation Storyboard.TargetProperty="(Panel.Background).(GradientBrush.GradientStops)[8].Color" 
-										To="Pink" Duration="0:0:2"/>
-						<ColorAnimation Storyboard.TargetProperty="(Panel.Background).(GradientBrush.GradientStops)[9].Color" 
-										To="Red" Duration="0:0:2"/>
-					</Storyboard>
-				</BeginStoryboard>
-			</EventTrigger>
-		</Grid.Triggers>-->
-
-        <!--<Grid.Background>
-            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                <GradientStop Offset="-0.3" Color="black"/>
-                <GradientStop Offset="0.5" Color="#380394"/>
-                <GradientStop Offset="1.1" Color="#5515c2"/>
-            </LinearGradientBrush>
-        </Grid.Background>
-        <Grid.Triggers>
-            <EventTrigger RoutedEvent="Grid.Loaded">
-                <BeginStoryboard>
-                    <Storyboard RepeatBehavior="Forever" Timeline.DesiredFrameRate="60" AutoReverse="True">
-                        <ColorAnimation Storyboard.TargetProperty="(Panel.Background).(GradientBrush.GradientStops)[0].Color"  
-										 To="#712ce8" Duration="0:0:1.5"/>
-                        <ColorAnimation Storyboard.TargetProperty="(Panel.Background).(GradientBrush.GradientStops)[1].Color"  
-										 To="#400b9c" Duration="0:0:1.5"/>
-                        <ColorAnimation Storyboard.TargetProperty="(Panel.Background).(GradientBrush.GradientStops)[1].Color"  
-										 To="#6a14ff" Duration="0:0:1.5"/>
-                        <ColorAnimation Storyboard.TargetProperty="(Panel.Background).(GradientBrush.GradientStops)[2].Color"  
-										 To="#de2343" Duration="0:0:1"/>
-                    </Storyboard>
-                </BeginStoryboard>
-            </EventTrigger>
-        </Grid.Triggers>-->
-
-
+        
         <Grid.ColumnDefinitions>
 			<ColumnDefinition Width="*"/>
 			<ColumnDefinition Width="*"/>
@@ -442,7 +371,6 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <!--<RowDefinition Height="*"/>-->
                     <RowDefinition Height="10*"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="10*"/>
@@ -480,7 +408,6 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <!--<RowDefinition Height="*"/>-->
                     <RowDefinition Height="10*"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="10*"/>
@@ -728,7 +655,6 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <!--<RowDefinition Height="*"/>-->
                     <RowDefinition Height="10*"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="10*"/>
