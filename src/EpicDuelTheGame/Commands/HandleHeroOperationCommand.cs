@@ -1,7 +1,6 @@
 ﻿using EpicDuelTheGame.Models;
 using EpicDuelTheGame.ViewModels;
 using System;
-using System.Threading.Tasks;
 
 namespace EpicDuelTheGame.Commands
 {
@@ -25,10 +24,10 @@ namespace EpicDuelTheGame.Commands
             gameViewModel.OnTurnChanged += OnTurnChanged;
         }
 
-        public HandleHeroOperationCommand(GameViewModel gameViewModel, Func<Hero, bool> operation, int activeOnTurn, Hero attacker, Hero victim)
+        public HandleHeroOperationCommand(GameViewModel gameViewModel, Func<Hero, bool> operationWithParameter, int activeOnTurn, Hero attacker, Hero victim)
         {
             _gameViewModel = gameViewModel;
-            _operationWithParameter = operation;
+            _operationWithParameter = operationWithParameter;
             _activeOnTurn = activeOnTurn;
             _attacker = attacker;
             _victim = victim;

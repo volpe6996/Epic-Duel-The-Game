@@ -12,14 +12,17 @@
         <ContentControl Content="{Binding CurrentViewModel }">
                 <ContentControl.Resources>
                         <DataTemplate DataType="{x:Type viewModels:StartViewModel}">
-                                <views:StartView/>
+                            <views:StartView/>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type viewModels:LoadGameViewModel}">
+                            <views:LoadGameView/>
                         </DataTemplate>
                         <DataTemplate DataType="{x:Type viewModels:ChooseHeroViewModel}">
-                                <views:ChooseHeroView/>
+                            <views:ChooseHeroView/>
                         </DataTemplate>
                         <DataTemplate DataType="{x:Type viewModels:GameViewModel}">
-                                <views:GameView/>
+                            <views:GameView/>
                         </DataTemplate>
-                </ContentControl.Resources>
+        </ContentControl.Resources>
         </ContentControl>
 </Window>

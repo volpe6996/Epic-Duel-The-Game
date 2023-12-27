@@ -33,19 +33,19 @@ namespace EpicDuelTheGame.Commands
         {
             if (_chooseHeroViewModel.SelectedHeroUser != null && _chooseHeroViewModel.SelectedHeroOpponent != null)
             {
-                if (_chooseHeroViewModel.SelectedHeroUser.HeroType == HeroTypes.Warrior)
-                    SelectedHeroUser = new Hero(_chooseHeroViewModel.UserEnterdName, HeroTypes.Warrior);
-                else if (_chooseHeroViewModel.SelectedHeroUser.HeroType == HeroTypes.Sorcerer)
-                    SelectedHeroUser = new Hero(_chooseHeroViewModel.UserEnterdName, HeroTypes.Sorcerer);
+                if (_chooseHeroViewModel.SelectedHeroUser.HeroType == HeroType.Warrior)
+                    SelectedHeroUser = new Hero(_chooseHeroViewModel.UserEnterdName, HeroType.Warrior, PlayerType.User);
+                else if (_chooseHeroViewModel.SelectedHeroUser.HeroType == HeroType.Sorcerer)
+                    SelectedHeroUser = new Hero(_chooseHeroViewModel.UserEnterdName, HeroType.Sorcerer, PlayerType.User);
                 else
-                    SelectedHeroUser = new Hero(_chooseHeroViewModel.UserEnterdName, HeroTypes.Ranger);
+                    SelectedHeroUser = new Hero(_chooseHeroViewModel.UserEnterdName, HeroType.Ranger, PlayerType.User);
 
-                if (_chooseHeroViewModel.SelectedHeroOpponent.HeroType == HeroTypes.Warrior)
-                    SelectedHeroOpponent = new Hero(_chooseHeroViewModel.OpponentEnterdName, HeroTypes.Warrior);
-                else if (_chooseHeroViewModel.SelectedHeroOpponent.HeroType == HeroTypes.Sorcerer)
-                    SelectedHeroOpponent = new Hero(_chooseHeroViewModel.OpponentEnterdName, HeroTypes.Sorcerer);
+                if (_chooseHeroViewModel.SelectedHeroOpponent.HeroType == HeroType.Warrior)
+                    SelectedHeroOpponent = new Hero(_chooseHeroViewModel.OpponentEnterdName, HeroType.Warrior, PlayerType.Ai);
+                else if (_chooseHeroViewModel.SelectedHeroOpponent.HeroType == HeroType.Sorcerer)
+                    SelectedHeroOpponent = new Hero(_chooseHeroViewModel.OpponentEnterdName, HeroType.Sorcerer, PlayerType.Ai);
                 else
-                    SelectedHeroOpponent = new Hero(_chooseHeroViewModel.OpponentEnterdName, HeroTypes.Ranger);
+                    SelectedHeroOpponent = new Hero(_chooseHeroViewModel.OpponentEnterdName, HeroType.Ranger, PlayerType.Ai);
 
                 NavigateToGameViewCommand = new NavigateCommand<GameViewModel>(new NavigationService<GameViewModel>(_navigationStore, () => new GameViewModel(_navigationStore, SelectedHeroUser, SelectedHeroOpponent)));
                 NavigateToGameViewCommand.Execute(parameter);

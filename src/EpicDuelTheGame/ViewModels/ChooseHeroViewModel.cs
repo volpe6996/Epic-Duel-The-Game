@@ -34,25 +34,6 @@ public class ChooseHeroViewModel : ViewModelBase
             OnPropertyChanged(nameof(SelectedHeroUser));
 
             UserTextBoxVisibility = "Visible";
-
-            if (SelectedHeroUser.HeroType == HeroTypes.Warrior)
-            {
-                UserWarriorStatsVisibility = "Visible";
-                UserSorcererStatsVisibility = "Hidden";
-                UserRangerStatsVisibility = "Hidden";
-            }
-            else if (SelectedHeroUser.HeroType == HeroTypes.Sorcerer)
-            {
-                UserWarriorStatsVisibility = "Hidden";
-                UserSorcererStatsVisibility = "Visible";
-                UserRangerStatsVisibility = "Hidden";
-            }
-            else if (SelectedHeroUser.HeroType == HeroTypes.Ranger)
-            {
-                UserWarriorStatsVisibility = "Hidden";
-                UserSorcererStatsVisibility = "Hidden";
-                UserRangerStatsVisibility = "Visible";
-            }
         }
     }
 
@@ -76,7 +57,7 @@ public class ChooseHeroViewModel : ViewModelBase
             _userEnterdName = value;
             OnPropertyChanged(nameof(UserEnterdName));
 
-            UserLabel = $"Twoim przeciwnikiem jest {value}";
+            UserLabel = $"Twoim herosem jest {value}";
         }
     }
 
@@ -88,39 +69,6 @@ public class ChooseHeroViewModel : ViewModelBase
         {
             _userLabel = value;
             OnPropertyChanged(nameof(UserLabel));
-        }
-    }
-
-    private string _userWarriorStatsVisibility = "Hidden";
-    public string UserWarriorStatsVisibility
-    {
-        get { return _userWarriorStatsVisibility; }
-        set
-        {
-            _userWarriorStatsVisibility = value;
-            OnPropertyChanged(nameof(UserWarriorStatsVisibility));
-        }
-    }
-
-    private string _userSorcererStatsVisibility = "Hidden";
-    public string UserSorcererStatsVisibility
-    {
-        get { return _userSorcererStatsVisibility; }
-        set
-        {
-            _userSorcererStatsVisibility = value;
-            OnPropertyChanged(nameof(UserSorcererStatsVisibility));
-        }
-    }
-
-    private string _userRangerStatsVisibility = "Hidden";
-    public string UserRangerStatsVisibility
-    {
-        get { return _userRangerStatsVisibility; }
-        set
-        {
-            _userRangerStatsVisibility = value;
-            OnPropertyChanged(nameof(UserRangerStatsVisibility));
         }
     }
 
@@ -136,25 +84,6 @@ public class ChooseHeroViewModel : ViewModelBase
             OnPropertyChanged(nameof(SelectedHeroOpponent));
 
             OpponentTextBoxVisibility = "Visible";
-
-            if (SelectedHeroOpponent.HeroType == HeroTypes.Warrior)
-            {
-                OpponentWarriorStatsVisibility = "Visible";
-                OpponentSorcererStatsVisibility = "Hidden";
-                OpponentRangerStatsVisibility = "Hidden";
-            }
-            else if (SelectedHeroOpponent.HeroType == HeroTypes.Sorcerer)
-            {
-                OpponentWarriorStatsVisibility = "Hidden";
-                OpponentSorcererStatsVisibility = "Visible";
-                OpponentRangerStatsVisibility = "Hidden";
-            }
-            else if (SelectedHeroOpponent.HeroType == HeroTypes.Ranger)
-            {
-                OpponentWarriorStatsVisibility = "Hidden";
-                OpponentSorcererStatsVisibility = "Hidden";
-                OpponentRangerStatsVisibility = "Visible";
-            }
         }
     }
 
@@ -178,7 +107,7 @@ public class ChooseHeroViewModel : ViewModelBase
             _opponentEnterdName = value;
             OnPropertyChanged(nameof(OpponentEnterdName));
 
-            OpponentLabel = $"Twoim przeciwnikiem jest {value}";
+            OpponentLabel = $"Herosem twojego przeciwnika jest {value}";
         }
     }
 
@@ -190,39 +119,6 @@ public class ChooseHeroViewModel : ViewModelBase
         {
             _opponentLabel = value;
             OnPropertyChanged(nameof(OpponentLabel));
-        }
-    }
-
-    private string _opponentWarriorStatsVisibility = "Hidden";
-    public string OpponentWarriorStatsVisibility
-    {
-        get { return _opponentWarriorStatsVisibility; }
-        set
-        {
-            _opponentWarriorStatsVisibility = value;
-            OnPropertyChanged(nameof(OpponentWarriorStatsVisibility));
-        }
-    }
-
-    private string _opponentSorcererStatsVisibility = "Hidden";
-    public string OpponentSorcererStatsVisibility
-    {
-        get { return _opponentSorcererStatsVisibility; }
-        set
-        {
-            _opponentSorcererStatsVisibility = value;
-            OnPropertyChanged(nameof(OpponentSorcererStatsVisibility));
-        }
-    }
-
-    private string _opponentRangerStatsVisibility = "Hidden";
-    public string OpponentRangerStatsVisibility
-    {
-        get { return _opponentRangerStatsVisibility; }
-        set
-        {
-            _opponentRangerStatsVisibility = value;
-            OnPropertyChanged(nameof(OpponentRangerStatsVisibility));
         }
     }
 
@@ -241,9 +137,27 @@ public class ChooseHeroViewModel : ViewModelBase
 
         ChoosableHeros = new ObservableCollection<ChooseHeroModel>
         {
-            new ChooseHeroModel(HeroTypes.Warrior, "Jakiœ super opis Warriora, mojego niepokonanego bohatera", "/images/poziomka.jpg"),
-            new ChooseHeroModel(HeroTypes.Sorcerer, "Jakiœ super opis Sorcerera, mojego niepokonanego bohatera", "/images/piston.jpg"),
-            new ChooseHeroModel(HeroTypes.Ranger, "Jakiœ super opis Rangera, mojego niepokonanego bohatera", "/images/menel.jpg"),
+            new ChooseHeroModel(
+                HeroType.Warrior,
+                "/images/poziomka.jpg",
+                "Nie ma problemu, który nie móg³by rozwi¹zaæ piêœci¹. Warrior - mistrz w rozjaœnianiu sytuacji... zazwyczaj poprzez wymachiwanie ogromnym mieczem.",
+                "Kontratak - po udanym uderzeniu przeciwnika dokonaj kontrataku w wysokoœci 80% zadanych tobie obra¿eñ. Otrzymujesz darmowy ruch. (-45 many)",
+                "Sok z gumijagód - Boost o 40% do si³y i zrêcznoœci. Trwa 3 tury (-25 many)",
+                "Gruba skóra - Zmniejsz otrzymywane obra¿enia. Boost +250% do zwinnoœci. Dzia³a 2 tury (-15 many)"),
+            new ChooseHeroModel(
+                HeroType.Sorcerer,
+                "/images/piston.jpg",
+                "Sorcerer - mistrz magii i nieprzewidywalnych wybuchów. Zawsze przygotowany do zadania czaru, zw³aszcza jeœli to zadanie obejmuje przekszta³cenie wrogów w kaczki.",
+                "Leczenie - odzyskaj do 80% maksymalnej wartoœci twojego HP (-50 many)",
+                "Wampir - Zabierz 25% maksymalnej wartoœci HP przeciwnika i daj sobie. (-40 many)",
+                "Wysysanie dusz - Zabierz 20 many przeciwnika. (-30 many)"),
+            new ChooseHeroModel(
+                HeroType.Ranger,
+                "/images/menel.jpg",
+                "Ranger - zwinny ³ucznik, który zawsze trzyma siê z dala od zamieszania. Jego umiejêtnoœæ strzelania z ³uku równie dobra, co jego zdolnoœæ do unikania niewygodnych rozmów.",
+                "Pe³ny unik - po udanym uderzeniu przeciwnika dokonaj pe³nego uniku, odzyskaj stracone HP, a tak¿e zregeneruj 30% maksymalnej wartoœci swojego HP (-35 many)",
+                "Sokole oko - Uzyskaj 3 gwarantowane criticale. Ka¿dy znich od teraz zabiera 10 many, a nie 20 (-30 many)",
+                "Skutecznoœæ - Wyzeruj zwinnoœæ przeciwnika na 5 tur (-35 many)"),
         };
 
         UserHeroChoosedCommand = new HeroChoosedCommand(this, "User");

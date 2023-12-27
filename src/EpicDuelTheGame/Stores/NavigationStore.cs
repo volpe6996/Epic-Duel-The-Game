@@ -1,4 +1,5 @@
 using EpicDuelTheGame.ViewModels;
+using Newtonsoft.Json;
 using System;
 
 namespace EpicDuelTheGame.Stores;
@@ -6,6 +7,7 @@ namespace EpicDuelTheGame.Stores;
 public class NavigationStore
 {
     public event Action CurrentViewModelChanged;
+    [JsonProperty]
     private ViewModelBase _currentViewModel;
     public ViewModelBase CurrentViewModel
     {
@@ -14,9 +16,6 @@ public class NavigationStore
         {
             _currentViewModel = value;
             OnCurrentViewModelChanged();
-
-            // tez wersja alternatywna, zamiast voida ktory robi za fasade odrazu robimy invoke eventu
-            // CurrentViewModelChanged?.Invoke();
         }
     }
 

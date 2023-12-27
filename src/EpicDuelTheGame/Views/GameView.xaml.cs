@@ -1,3 +1,5 @@
+using EpicDuelTheGame.ViewModels;
+using System;
 using System.Windows.Controls;
 
 namespace EpicDuelTheGame.Views;

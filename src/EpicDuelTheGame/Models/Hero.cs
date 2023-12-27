@@ -1,19 +1,28 @@
 using EpicDuelTheGame.Abstract;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Threading.Tasks;
 
 namespace EpicDuelTheGame.Models;
 
-public enum HeroTypes
+public enum HeroType
 {
     Warrior,
     Sorcerer,
     Ranger
 }
 
+public enum PlayerType
+{
+    User,
+    Ai
+}
+
 public class Hero : ClassBase, ILogger, IRandomAuthtorization
 {
     public string? Name { get; set; }
+    public PlayerType PlayerType { get; set; }
 
     private int _hp;
     public int Hp
@@ -86,42 +95,6 @@ public class Hero : ClassBase, ILogger, IRandomAuthtorization
         }
     }
 
-    // warrior
-    private int? _counterattack;
-    public int? Counterattack
-    {
-        get { return _counterattack; }
-        set
-        {
-            _counterattack = value;
-            OnPropertyChanged(nameof(Counterattack));
-        }
-    }
-
-    // sorcerer
-    private int? _healing;
-    public int? Healing
-    {
-        get { return _healing; }
-        set
-        {
-            _healing = value;
-            OnPropertyChanged(nameof(Healing));
-        }
-    }
-
-    // ranger
-    private int? _dodge;
-    public int? Dodge
-    {
-        get { return _dodge; }
-        set
-        {
-            _dodge = value;
-            OnPropertyChanged(nameof(Dodge));
-        }
-    }
-
     private int _latestDamageValue;
     public int LatestDamageValue
     {
@@ -157,7 +130,7 @@ public class Hero : ClassBase, ILogger, IRandomAuthtorization
         }
     }
 
-    private bool _damageRelatedTurn;
+    private bool _damageRelatedTurn = false;
     public bool DamageRelatedTurn
     {
         get { return _damageRelatedTurn; }
@@ -168,78 +141,186 @@ public class Hero : ClassBase, ILogger, IRandomAuthtorization
         }
     }
 
-    public HeroTypes HeroType;
+    private HeroType _heroType;
+    public HeroType HeroType
+    {
+        get { return _heroType; }
+        set
+        {
+            _heroType = value;
+            OnPropertyChanged(nameof(HeroType));
+        }
+    }
 
-    public bool IsFirstSpellActive = false;
+    private bool _isFirstSpellActive = false;
+    public bool IsFirstSpellActive
+    {
+        get { return _isFirstSpellActive; }
+        set
+        {
+            _isFirstSpellActive = value;
+            OnPropertyChanged(nameof(IsFirstSpellActive));
+        }
+    }
     private int FirstSpellActiveCounter = 0;
 
-    private bool IsSecondSpellActive = false;
+    private bool _isSecondSpellActive = false;
+    public bool IsSecondSpellActive
+    {
+        get { return _isSecondSpellActive; }
+        set
+        {
+            _isSecondSpellActive = value;
+            OnPropertyChanged(nameof(IsSecondSpellActive));
+        }
+    }
     private int SecondSpellActiveCounter = 0;
 
     private int UsedCriticals = 0;
 
     public event Action<string> LogEvent;
+    public event Action<bool> OnFirstSpell;
+    public event Action<bool> OnSecondSpell;
 
-    public Hero(string name, HeroTypes heroType)
+    public Hero(string name, HeroType heroType, PlayerType playerType)
     {
+        List<string> listaImion = new List<string>
+        {
+            "Aragorn",
+            "Legolas",
+            "Gandalf",
+            "Frodo",
+            "Arwen",
+            "Elrond",
+            "Gimli",
+            "Galadriel",
+            "Eldamar",
+            "Glorfindel",
+            "Lúthien",
+            "Eärendil",
+            "Finrod",
+            "Amdir",
+            "Arwen",
+            "Aricane",
+            "Elowen",
+            "Thalion",
+            "Elysium",
+            "Draven",
+            "Seraphina",
+            "Calarian",
+            "Lirael",
+            "Zephyros",
+            "Evadne",
+            "Galadriel",
+            "Kaelith",
+            "Selenea",
+            "Alarion",
+            "Aerendir",
+            "Mirrindor",
+            "Sylvaris",
+            "Lyrastra",
+            "Vaelin",
+            "Isolde",
+            "Erevan",
+            "Valorian",
+            "Maelis",
+            "Aeliana",
+            "Eirian",
+            "Faldrin",
+            "Elaria",
+            "Orionis",
+            "Morwen",
+            "Thessalia"
+        };
+
         if (name == string.Empty)
         {
-            if (heroType == HeroTypes.Warrior)
-                name = "Warrior";
-            else if (heroType == HeroTypes.Sorcerer)
-                name = "Sorcerer";
-            else if (heroType == HeroTypes.Ranger)
-                name = "Ranger";
+            if (heroType == HeroType.Warrior)
+                name = listaImion[new Random().Next(listaImion.Count)];
+            else if (heroType == HeroType.Sorcerer)
+                name = listaImion[new Random().Next(listaImion.Count)];
+            else if (heroType == HeroType.Ranger)
+                name = listaImion[new Random().Next(listaImion.Count)];
+
+            listaImion.Remove(name);
         }
 
         this.Name = name;
         HeroType = heroType;
+        PlayerType = playerType;
 
         Init();
     }
 
     private void Init()
     {
-        if (HeroType == HeroTypes.Warrior)
+        if (HeroType == HeroType.Warrior)
         {
-            Hp = 50;
-            Strength = 40;
-            Dexterity = 25;
-            Intelligence = 20;
-            Mana = 45;
-            Counterattack = 50;
+            Hp = Globals.WARRIOR_START_HP;
+            Strength = Globals.WARRIOR_START_STRENGTH;
+            Dexterity = Globals.WARRIOR_START_DEXTERITY;
+            Intelligence = Globals.WARRIOR_START_INTELLIGENCE;
+            Mana = Globals.WARRIOR_START_MANA;
         }
-        else if (HeroType == HeroTypes.Sorcerer)
-        {
-            Hp = 35;
-            Strength = 35;
-            Dexterity = 30;
-            Intelligence = 30;
-            Mana = 45;
-            Healing = 50;
+        else if (HeroType == HeroType.Sorcerer)
+        {   
+            Hp = Globals.SORCERER_START_HP;
+            Strength = Globals.SORCERER_START_STRENGTH;
+            Dexterity = Globals.SORCERER_START_DEXTERITY;
+            Intelligence = Globals.SORCERER_START_INTELLIGENCE;
+            Mana = Globals.SORCERER_START_MANA;
         }
-        else if (HeroType == HeroTypes.Ranger)
+        else if (HeroType == HeroType.Ranger)
         {
-            Hp = 40;
-            Strength = 30;
-            Dexterity = 40;
-            Intelligence = 35;
-            Mana = 50;
-            Dodge = 50;
+            Hp = Globals.RANGER_START_HP;
+            Strength = Globals.RANGER_START_STRENGTH;
+            Dexterity = Globals.RANGER_START_DEXTERITY;
+            Intelligence = Globals.RANGER_START_INTELLIGENCE;
+            Mana = Globals.RANGER_START_MANA;
         }
     }
 
     public bool UpIntelligence()
     {
-        if (Mana >= 50)
+        if (HeroType == HeroType.Warrior && Mana >= Globals.WARRIOR_UP_INTELLIGENCE_MANA_REQ)
         {
-            Mana -= 50;
+            Mana -= Globals.WARRIOR_UP_INTELLIGENCE_MANA_REQ;
             Intelligence += 5;
+            Strength += 3;
+            Dexterity += 5;
+            Hp += 40;
+
+            Log($"Zwiêkszono o 5: inteligencjê, si³ê, zrêcznoœæ. (+35 HP, -{Globals.WARRIOR_UP_INTELLIGENCE_MANA_REQ} MANY)");
+
+            DamageRelatedTurn = false;
+
+            return true;
+        }
+        else if (HeroType == HeroType.Sorcerer && Mana >= Globals.SORCERER_UP_INTELLIGENCE_MANA_REQ)
+        {
+            Mana -= Globals.SORCERER_UP_INTELLIGENCE_MANA_REQ;
+            Intelligence += 4;
             Strength += 5;
             Dexterity += 5;
             Hp += 40;
 
-            Log("Zwiêkszono o 5: inteligencjê, si³ê, zrêcznoœæ. (+40 HP, -50 MANA)");
+            Log($"Zwiêkszono o 5: inteligencjê, si³ê, zrêcznoœæ. (+40 HP, -{Globals.SORCERER_UP_INTELLIGENCE_MANA_REQ} MANY)");
+
+            DamageRelatedTurn = false;
+
+            return true;
+        }
+        else if (HeroType == HeroType.Ranger && Mana >= Globals.RANGER_UP_INTELLIGENCE_MANA_REQ)
+        {
+            Mana -= Globals.RANGER_UP_INTELLIGENCE_MANA_REQ;
+            Intelligence += 4;
+            Strength += 4;
+            Dexterity += 8;
+            Hp += 40;
+
+            Log($"Zwiêkszono o 5: inteligencjê, si³ê, zrêcznoœæ. (+40 HP, -{Globals.RANGER_UP_INTELLIGENCE_MANA_REQ} MANY)");
+
+            DamageRelatedTurn = false;
 
             return true;
         }
@@ -249,154 +330,178 @@ public class Hero : ClassBase, ILogger, IRandomAuthtorization
             return false;
         }
 
-        if (HeroType == HeroTypes.Warrior)
-        {
-
-        }
-        else if (HeroType == HeroTypes.Sorcerer)
-        {
-
-        }
-        else if (HeroType == HeroTypes.Ranger)
-        {
-
-        }
-
-        DamageRelatedTurn = false;
     }
 
     public void WeakDamage(Hero opponent)
     {
-        Mana += 8;
+        Mana += Globals.MANA_REWARD;
 
         // wysokosc zadanych obrazen = zadane obrazenia-zniejszone obrazenia 
-        var weakDamage = (int)Math.Ceiling((decimal)(Strength / 3 + Intelligence / 9)) - (int)Math.Ceiling((decimal)opponent.Dexterity / 8);
+        var weakDamage = (int)Math.Ceiling((decimal)(Strength / 5 + Intelligence / 10)) - (int)Math.Ceiling((decimal)opponent.Dexterity / 10);
 
         LatestDamageValue = weakDamage;
         opponent.Hp -= weakDamage;
 
-        Log($"{this.Name} zdal {weakDamage} obrazen {opponent.Name}owi!(+8 many)");
-
-        if (HeroType == HeroTypes.Warrior)
-        {
-
-        }
-        else if (HeroType == HeroTypes.Sorcerer)
-        {
-
-        }
-        else if (HeroType == HeroTypes.Ranger)
-        {
-
-        }
+        Log($"{this.Name} zada³ {weakDamage} obra¿eñ {opponent.Name}owi!(+{Globals.MANA_REWARD} many)");
 
         DamageRelatedTurn = true;
     }
 
-    public void StrongDamage(Hero opponent)
+    public bool StrongDamage(Hero opponent)
     {
-        if (HeroType == HeroTypes.Ranger && IsFirstSpellActive && UsedCriticals <= 3 && Mana >= 10)
+        if (HeroType == HeroType.Ranger && IsFirstSpellActive && UsedCriticals <= 3)
         {
-            Mana -= 10;
-            var strongDamage = (int)Math.Ceiling((decimal)(Strength / 2 + Intelligence / 4)) - (int)Math.Ceiling((decimal)opponent.Dexterity / 8);
+            if(Mana >= Globals.RANGER_ULT_STRONG_ATTACK_MANA_REQ)
+            {
+                Mana -= Globals.RANGER_ULT_STRONG_ATTACK_MANA_REQ;
+                var strongDamage = (int)Math.Ceiling((decimal)(Strength / 3 + Intelligence / 9)) - (int)Math.Ceiling((decimal)opponent.Dexterity / 9);
 
-            opponent.Hp -= strongDamage;
-            UsedCriticals++;
+                opponent.Hp -= strongDamage;
+                UsedCriticals++;
 
-            Log($"{this.Name} zdal {strongDamage} obrazen {opponent.Name}owi(-10 many)");
+                Log($"Critical! {this.Name} zada³ {strongDamage} obra¿eñ {opponent.Name}owi(-10 many)");
+
+                DamageRelatedTurn = true;
+                return true;
+            }
+            else
+            {
+                Log("Za ma³o many na criticala!");
+                return false;
+            }
         }
         else
         {
-            if (Mana < 20)
+            if (Mana < Globals.STRONG_ATTACK_MANA_REQ)
+            {
                 Log($"Atak siê nie powiód³, za ma³o many!");
+                return false;
+            }
             else if (OperationAuthtorization(Strength))
             {
-                Mana -= 20;
-                var strongDamage = (int)Math.Ceiling((decimal)(Strength / 2 + Intelligence / 4)) - (int)Math.Ceiling((decimal)opponent.Dexterity / 8);
+                Mana -= Globals.STRONG_ATTACK_MANA_REQ;
+
+                var strongDamage = (int)Math.Ceiling((decimal)(Strength / 3 + Intelligence / 9)) - (int)Math.Ceiling((decimal)opponent.Dexterity / 9);
 
                 opponent.Hp -= strongDamage;
 
-                Log($"{this.Name} zdal {strongDamage} obrazen {opponent.Name}owi(-20 many)");
+                Log($"Mocny atak! {this.Name} zada³ {strongDamage} obra¿eñ {opponent.Name}owi(-20 many)");
+
+                DamageRelatedTurn = true;
+                return true;
             }
             else
-                Log($"Mocny atak siê nie powiód³!");
-        }
+            {
+                Log("Atak siê nie powiód³! Za ma³o lacku");
+                DamageRelatedTurn = false;
 
-        DamageRelatedTurn = true;
+                return true;
+            }
+        }
     }
 
-    public void UseUltimate(Hero opponent)
+    public bool UseUltimate(Hero opponent)
     {
-        if (HeroType == HeroTypes.Warrior)
+        if (HeroType == HeroType.Warrior)
         {
-            if (opponent.LatestDamageValue == 0)
+            if (!opponent.DamageRelatedTurn)
+            {
                 Log("Przeciwnik nie zada³ obra¿eñ!");
-            else if (!opponent.DamageRelatedTurn)
-                Log($"Nie mo¿esz kontratakowaæ 2 razy z rzêdu!");
-            else if (Mana < 45)
+                return false;
+            }
+            else if (Mana < Globals.WARRIOR_ULT_MANA_REQ)
+            {
                 Log("Za ma³o many!");
+                return false;
+            }
             else
             {
-                var damage = (int)Math.Ceiling(2d * opponent.LatestDamageValue);
+                var damage = (int)Math.Ceiling(0.8 * opponent.LatestDamageValue);
 
                 opponent.Hp -= damage;
 
                 LatestDamageValue = damage;
-                Mana -= 45;
-                Log($"Kontratak! Zadane obrazenia: {damage} (-45 many)");
+                Mana -= Globals.WARRIOR_ULT_MANA_REQ;
+                Log($"Kontratak! Zadane obra¿enia: {damage} (-45 many)");
 
                 opponent.DamageRelatedTurn = false;
                 DamageRelatedTurn = true;
+
+                return true;
             }
         }
-        else if (HeroType == HeroTypes.Sorcerer)
+        else if (HeroType == HeroType.Sorcerer)
         {
-            if (Mana < 50)
+            if (Mana < Globals.SORCERER_ULT_MANA_REQ)
+            {
                 Log("Za ma³o many!");
+                return false;
+            }
             else
             {
                 var upHpValue = (int)Math.Ceiling(0.8 * MaxHp);
                 var hpDiffrence = Math.Abs(upHpValue - Hp);
 
-                if (!(Hp > upHpValue))
+                if (Hp != upHpValue)
                 {
                     Hp = upHpValue;
-                    Mana -= 50;
+                    Mana -= Globals.SORCERER_ULT_MANA_REQ;
                     Log($"Zwiêkszono HP o: {hpDiffrence}HP (-50 many)");
+
+                    DamageRelatedTurn = false;
+
+                    return true;
                 }
                 else
-                    Log("Obcena wartoœæ HP jest wiêksza od wartoœci zwiêkszenia!");
+                {
+                    Log("Ty pazerna œwinio! Obcena wartoœæ HP jest niemniejsza od wartoœci zwiêkszenia!");
+                    DamageRelatedTurn = false;
+
+                    return true;
+                }
             }
         }
-        else if (HeroType == HeroTypes.Ranger)
+        else if (HeroType == HeroType.Ranger)
         {
             if (!opponent.DamageRelatedTurn)
-                Log("Przeciwnik nie wykona³ ruchu, nie zada³ obra¿eñ!");
-            else if (Mana < 35)
+            {
+                Log("Przeciwnik nie wykona³ ruchu, nie zada³ obra¿eñ");
+                return false;
+            }
+            else if (Mana < Globals.RANGER_ULT_MANA_REQ)
+            {
                 Log("Za ma³o many!");
+                return false;
+            }
             else
             {
                 var fullDodgeAndSmallHeal = opponent.LatestDamageValue + (int)Math.Ceiling(0.3 * MaxHp);
 
                 Hp += fullDodgeAndSmallHeal;
-                Mana -= 35;
+                Mana -= Globals.RANGER_ULT_MANA_REQ;
                 Log($"Pe³ny unik! Odzyskano i zregenerowano {fullDodgeAndSmallHeal}HP (-35 many)");
+
+                DamageRelatedTurn = false;
+
+                return true;
             }
         }
+
+        return true;
     }
 
     public bool UseFirstSpell(Hero opponent)
     {
         if (!IsSecondSpellActive)
         {
-            if (HeroType == HeroTypes.Warrior)
+            if (HeroType == HeroType.Warrior)
             {
-                if (Mana >= 25)
+                if (Mana >= Globals.WARRIOR_SPELL1_MANA_REQ)
                 {
                     if (IsFirstSpellActive)
                     {
                         FirstSpellActiveCounter = 0;
-                        Mana -= 25;
+                        Mana -= Globals.WARRIOR_SPELL1_MANA_REQ;
 
                         Log("Odnowiono pierwsze zaklêcie!");
                     }
@@ -408,12 +513,18 @@ public class Hero : ClassBase, ILogger, IRandomAuthtorization
                         Strength += _strengthBoost;
                         Dexterity += _dexterityBoost;
 
-                        Mana -= 25;
+                        Mana -= Globals.WARRIOR_SPELL1_MANA_REQ;
                         IsFirstSpellActive = true;
+
+                        if(PlayerType == PlayerType.User)
+                            OnFirstSpellChanged(true);
+                        else
+                            OnFirstSpellChanged(false);
 
                         Log("Aktywowano pierwsze zaklêcie!");
                     }
 
+                    DamageRelatedTurn = false;
                     return true;
                 }
                 else
@@ -422,17 +533,21 @@ public class Hero : ClassBase, ILogger, IRandomAuthtorization
                     return false;
                 }
             }
-            else if (HeroType == HeroTypes.Sorcerer)
+            else if (HeroType == HeroType.Sorcerer)
             {
-                if (Mana >= 40)
+                if (Mana >= Globals.SORCERER_SPELL1_MANA_REQ)
                 {
-                    var hpToTakeFromOpponent = (int)Math.Ceiling(opponent.Hp * 0.35);
-                    opponent.Hp -= hpToTakeFromOpponent;
-                    Hp += hpToTakeFromOpponent;
+                    var hpTakenFromOpponent = (int)Math.Ceiling(opponent.MaxHp * 0.25);
+                    LatestDamageValue = hpTakenFromOpponent;
+                    opponent.Hp -= hpTakenFromOpponent;
+                    Hp += hpTakenFromOpponent;
 
-                    Mana -= 40;
+                    Mana -= Globals.SORCERER_SPELL1_MANA_REQ;
 
-                    Log($"Aktywowano pierwsze zaklêcie! Zabrano przeciwnikowi {hpToTakeFromOpponent} HP!");
+                    Log($"Aktywowano pierwsze zaklêcie! Zabrano przeciwnikowi {hpTakenFromOpponent} HP!");
+
+                    DamageRelatedTurn = false;
+
                     return true;
                 }
                 else
@@ -441,24 +556,31 @@ public class Hero : ClassBase, ILogger, IRandomAuthtorization
                     return false;
                 }
             }
-            else if (HeroType == HeroTypes.Ranger) // 3 gwarantowane criticale, -10many/atak
+            else if (HeroType == HeroType.Ranger) // 3 gwarantowane criticale, -10many/atak
             {
-                if (Mana >= 30)
+                if (Mana >= Globals.RANGER_SPELL1_MANA_REQ)
                 {
                     if (IsFirstSpellActive)
                     {
                         UsedCriticals = 0;
-                        Mana -= 30;
+                        Mana -= Globals.RANGER_SPELL1_MANA_REQ;
 
                         Log("Odnowiono pierwsze zaklêcie!");
                     }
                     else
                     {
-                        Mana -= 30;
+                        Mana -= Globals.RANGER_SPELL1_MANA_REQ;
                         IsFirstSpellActive = true;
+
+                        if (PlayerType == PlayerType.User)
+                            OnFirstSpellChanged(true);
+                        else
+                            OnFirstSpellChanged(false);
 
                         Log("Aktywowano pierwsze zaklêcie! Masz gwarantowane 3 criticale!");
                     }
+                    DamageRelatedTurn = false;
+
                     return true;
                 }
                 else
@@ -481,47 +603,34 @@ public class Hero : ClassBase, ILogger, IRandomAuthtorization
     {
         if (!IsFirstSpellActive)
         {
-            if (HeroType == HeroTypes.Warrior)
+            if (HeroType == HeroType.Warrior)
             {
-                if (Mana >= 15)
+                if (Mana >= Globals.WARRIOR_SPELL2_MANA_REQ)
                 {
                     if (IsSecondSpellActive)
                     {
                         SecondSpellActiveCounter = 0;
-                        Mana -= 15;
+                        Mana -= Globals.WARRIOR_SPELL2_MANA_REQ;
 
                         Log("Odnowiono drugie zaklêcie!");
                     }
                     else
                     {
-                        _dexterityBoost = (int)Math.Ceiling(Dexterity * 0.6);
+                        _dexterityBoost = (int)Math.Ceiling(Dexterity * 2.5);
 
                         Dexterity += _dexterityBoost;
 
-                        Mana -= 15;
+                        Mana -= Globals.WARRIOR_SPELL2_MANA_REQ;
                         IsSecondSpellActive = true;
+
+                        if (PlayerType == PlayerType.User)
+                            OnSecondSpellChanged(true);
+                        else
+                            OnSecondSpellChanged(false);
 
                         Log("Aktywowano drugie zaklêcie!");
                     }
-                    
-                    return true;
-                }
-                else
-                {
-                    Log("Za ma³o many!");
-                    return false;
-                }
-            }
-            else if (HeroType == HeroTypes.Sorcerer)
-            {
-                if (Mana >= 30)
-                {
-                    var manaToTakeFromOpponent = (int)Math.Ceiling(opponent.Hp * 0.25);
-                    opponent.Mana -= manaToTakeFromOpponent;
-
-                    Mana -= 30;
-
-                    Log($"Aktywowano drugie zaklêcie! Zabrano przeciwnikowi {manaToTakeFromOpponent} many!");
+                    DamageRelatedTurn = false;
 
                     return true;
                 }
@@ -531,14 +640,34 @@ public class Hero : ClassBase, ILogger, IRandomAuthtorization
                     return false;
                 }
             }
-            else if (HeroType == HeroTypes.Ranger)
+            else if (HeroType == HeroType.Sorcerer)
             {
-                if (Mana >= 35)
+                if (Mana >= Globals.SORCERER_SPELL2_MANA_REQ)
+                {
+                    opponent.Mana -= 20;
+
+                    Mana -= Globals.SORCERER_SPELL2_MANA_REQ;
+
+                    Log($"Aktywowano drugie zaklêcie! Zabrano przeciwnikowi 20 many!");
+
+                    DamageRelatedTurn = false;
+
+                    return true;
+                }
+                else
+                {
+                    Log("Za ma³o many!");
+                    return false;
+                }
+            }
+            else if (HeroType == HeroType.Ranger)
+            {
+                if (Mana >= Globals.RANGER_SPELL2_MANA_REQ)
                 {
                     if (IsSecondSpellActive)
                     {
                         SecondSpellActiveCounter = 0;
-                        Mana -= 35;
+                        Mana -= Globals.RANGER_SPELL2_MANA_REQ;
 
                         Log("Odnowiono drugie zaklêcie!");
                     }
@@ -547,11 +676,18 @@ public class Hero : ClassBase, ILogger, IRandomAuthtorization
                         _takenDexterity = opponent.Dexterity;
                         opponent.Dexterity = 0;
 
-                        Mana -= 35;
+                        Mana -= Globals.RANGER_SPELL2_MANA_REQ;
                         IsSecondSpellActive = true;
+
+                        if (PlayerType == PlayerType.User)
+                            OnSecondSpellChanged(true);
+                        else
+                            OnSecondSpellChanged(false);
 
                         Log($"Aktywowano drugie zaklêcie! Zabrano przeciwnikowi ca³¹ zwinnoœæ!");
                     }
+                    DamageRelatedTurn = false;
+
                     return true;
                 }
                 else
@@ -567,12 +703,12 @@ public class Hero : ClassBase, ILogger, IRandomAuthtorization
             return false;
         }
 
-        return false;
+        return true;
     }
 
     public async Task CheckSpellStatus(Hero opponent)
     {
-        if (HeroType == HeroTypes.Warrior)
+        if (HeroType == HeroType.Warrior)
         {
             if (IsFirstSpellActive)
             {
@@ -587,6 +723,12 @@ public class Hero : ClassBase, ILogger, IRandomAuthtorization
                     _dexterityBoost = 0;
 
                     IsFirstSpellActive = false;
+
+                    if (PlayerType == PlayerType.User)
+                        OnFirstSpellChanged(true);
+                    else
+                        OnFirstSpellChanged(false);
+
                     FirstSpellActiveCounter = 0;
 
                     Log("Pierwsze zaklêcie wygas³o!");
@@ -605,6 +747,12 @@ public class Hero : ClassBase, ILogger, IRandomAuthtorization
                     _dexterityBoost = 0;
 
                     IsSecondSpellActive = false;
+
+                    if (PlayerType == PlayerType.User)
+                        OnSecondSpellChanged(true);
+                    else
+                        OnSecondSpellChanged(false);
+
                     SecondSpellActiveCounter = 0;
 
                     Log("Drugie zaklêcie wygas³o!");
@@ -612,11 +760,17 @@ public class Hero : ClassBase, ILogger, IRandomAuthtorization
                 }
             }
         }
-        else if (HeroType == HeroTypes.Ranger)
+        else if (HeroType == HeroType.Ranger)
         {
             if (IsFirstSpellActive && UsedCriticals == 3)
             {
                 IsFirstSpellActive = false;
+
+                if (PlayerType == PlayerType.User)
+                    OnFirstSpellChanged(true);
+                else
+                    OnFirstSpellChanged(false);
+
                 UsedCriticals = 0;
 
                 Log("Pierwsze zaklêcie wygas³o!");
@@ -625,14 +779,20 @@ public class Hero : ClassBase, ILogger, IRandomAuthtorization
 
             if (IsSecondSpellActive)
             {
-                if (SecondSpellActiveCounter != 2)
+                if (SecondSpellActiveCounter != 5)
                     SecondSpellActiveCounter++;
-                else if (SecondSpellActiveCounter == 2)
+                else if (SecondSpellActiveCounter == 5)
                 {
                     opponent.Dexterity += _takenDexterity;
                     _takenDexterity = 0;
 
                     IsSecondSpellActive = false;
+
+                    if (PlayerType == PlayerType.User)
+                        OnSecondSpellChanged(true);
+                    else
+                        OnSecondSpellChanged(false);
+
                     SecondSpellActiveCounter = 0;
 
                     Log("Drugie zaklêcie wygas³o!");
@@ -640,6 +800,16 @@ public class Hero : ClassBase, ILogger, IRandomAuthtorization
                 }
             }
         }
+    }
+
+    public void OnFirstSpellChanged(bool IfUser)
+    {
+        OnFirstSpell?.Invoke(IfUser);
+    }
+
+    public void OnSecondSpellChanged(bool IfUser)
+    {
+        OnSecondSpell?.Invoke(IfUser);
     }
 
     public void Log(string message)

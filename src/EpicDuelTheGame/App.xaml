@@ -3,6 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:EpicDuelTheGame">
     <Application.Resources>
-         
+        <FontFamily x:Key="ChakraPetchRegular">./Fonts/ChakraPetch-Regular.ttf#Chakra Petch</FontFamily>
+        <FontFamily x:Key="ChakraPetchBold">./Fonts/ChakraPetch-Bold.ttf#Chakra Petch</FontFamily>
+        <FontFamily x:Key="ChakraPetchLight">./Fonts/ChakraPetch-Light.ttf#Chakra Petch</FontFamily>
+        <FontFamily x:Key="ChakraPetchMedium">./Fonts/ChakraPetch-Medium.ttf#Chakra Petch</FontFamily>
     </Application.Resources>
 </Application>

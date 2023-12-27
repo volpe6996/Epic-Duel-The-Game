@@ -1,6 +1,5 @@
 ﻿using EpicDuelTheGame.Models;
 using EpicDuelTheGame.ViewModels;
-using System.Threading.Tasks;
 
 namespace EpicDuelTheGame.Commands
 {
@@ -23,18 +22,20 @@ namespace EpicDuelTheGame.Commands
 
         public override async void Execute(object parameter)
         {
+            bool changeTurn = true;
+
             await _attacker.CheckSpellStatus(_victim);
             _victim.ClearLog();
 
             if (parameter.ToString() == "Weak")
                 _attacker.WeakDamage(_victim);
             else if (parameter.ToString() == "Strong")
-                _attacker.StrongDamage(_victim);
+                changeTurn = _attacker.StrongDamage(_victim);
             else if (parameter.ToString() == "Ult")
-                _attacker.UseUltimate(_victim);
+                changeTurn = _attacker.UseUltimate(_victim);
 
             // zmiana tury po ruchu, ult warriora nie zmienia tury, darmowy ruch
-            if (_attacker.HeroType == HeroTypes.Warrior && parameter.ToString() == "Ult")
+            if ((_attacker.HeroType ==  HeroType.Warrior && parameter.ToString() == "Ult") || !changeTurn)
                 _gameViewModel.Turn += 0;
             else
                 _gameViewModel.Turn = (_gameViewModel.Turn == 0) ? 1 : 0;

@@ -8,12 +8,14 @@ namespace EpicDuelTheGame.ViewModels;
 public class StartViewModel : ViewModelBase
 {
     public ICommand NavigateChooseHeroCommand { get; }
+    public ICommand NavigateLoadGameCommand { get; }
 
     public StartViewModel(NavigationStore navigationStore)
     {
-        // NavigateChooseHeroCommand = new NavigateCommand<ChooseHeroViewModel>(navigationStore, () => new ChooseHeroViewModel(navigationStore ));
-
         NavigateChooseHeroCommand
             = new NavigateCommand<ChooseHeroViewModel>(new NavigationService<ChooseHeroViewModel>(navigationStore, () => new ChooseHeroViewModel(navigationStore)));
+
+        NavigateLoadGameCommand 
+            = new NavigateCommand<LoadGameViewModel>(new NavigationService<LoadGameViewModel>(navigationStore, () => new LoadGameViewModel(navigationStore)));
     }
 }

@@ -19,27 +19,66 @@ namespace EpicDuelTheGame.Services
 
         public async Task Decide()
         {
-            //if(_gameViewModel.Turn == 1)
-            //    _gameViewModel.OpponentAttacksCommand.Execute("Weak");
-
             await Task.Delay(1750);
 
-            if (_aiHero.Mana >= 50 && OperationAuthtorization(50))
-                //_gameViewModel.OpponentUpIntelligenceCommand.Execute(_gameViewModel.UserHero);
-                _gameViewModel.OpponentUpIntelligenceCommand.Execute(null);
-            else if (_aiHero.Mana >= 50 && OperationAuthtorization(90))
-                _gameViewModel.OpponentAttacksCommand.Execute("Ult");
-            else
-                _gameViewModel.OpponentAttacksCommand.Execute("Weak");
-
-            //if(!_aiHero.IsFirstSpellActive)
-            //    _gameViewModel.OpponentUseFirstSpellCommand.Execute(_gameViewModel.UserHero);
-            //else
-            //    _gameViewModel.OpponentAttacksCommand.Execute("Weak");
-
-            //_gameViewModel.OpponentAttacksCommand.Execute("Ult");
-
-            //_gameViewModel.OpponentAttacksCommand.Execute("Weak");
+            if (_aiHero.HeroType == HeroType.Warrior)
+            {
+                if (_aiHero.Mana >= Globals.WARRIOR_UP_INTELLIGENCE_MANA_REQ && OperationAuthtorization(85))
+                {
+                    if(OperationAuthtorization(65))
+                        _gameViewModel.OpponentUpIntelligenceCommand.Execute(null);
+                    else
+                        _gameViewModel.OpponentAttacksCommand.Execute("Ult");
+                }
+                else if (_aiHero.Mana >= Globals.WARRIOR_SPELL1_MANA_REQ && (!_aiHero.IsFirstSpellActive && !_aiHero.IsSecondSpellActive) && OperationAuthtorization(10))
+                    _gameViewModel.OpponentUseFirstSpellCommand.Execute(_gameViewModel.UserHero);
+                else if (_aiHero.Mana >= Globals.STRONG_ATTACK_MANA_REQ && OperationAuthtorization(15))
+                    _gameViewModel.OpponentAttacksCommand.Execute("Strong");
+                else if (_aiHero.Mana >= Globals.WARRIOR_SPELL2_MANA_REQ && (!_aiHero.IsSecondSpellActive && !_aiHero.IsFirstSpellActive) && OperationAuthtorization(10))
+                    _gameViewModel.OpponentUseSecondSpellCommand.Execute(_gameViewModel.UserHero);
+                else
+                    _gameViewModel.OpponentAttacksCommand.Execute("Weak");
+            }
+            else if (_aiHero.HeroType == HeroType.Sorcerer)
+            {
+                if (_aiHero.Mana >= Globals.SORCERER_UP_INTELLIGENCE_MANA_REQ && OperationAuthtorization(75))
+                {
+                    if (OperationAuthtorization(60))
+                        _gameViewModel.OpponentUpIntelligenceCommand.Execute(null);
+                    else
+                        _gameViewModel.OpponentAttacksCommand.Execute("Ult");
+                }
+                else if (_aiHero.Mana >= Globals.SORCERER_SPELL1_MANA_REQ && (!_aiHero.IsFirstSpellActive && !_aiHero.IsSecondSpellActive) && OperationAuthtorization(10))
+                    _gameViewModel.OpponentUseFirstSpellCommand.Execute(_gameViewModel.UserHero);
+                else if (_aiHero.Mana >= Globals.STRONG_ATTACK_MANA_REQ && OperationAuthtorization(15))
+                    _gameViewModel.OpponentAttacksCommand.Execute("Strong");
+                else if (_aiHero.Mana >= Globals.SORCERER_SPELL2_MANA_REQ && (!_aiHero.IsSecondSpellActive && !_aiHero.IsFirstSpellActive) && OperationAuthtorization(10))
+                    _gameViewModel.OpponentUseSecondSpellCommand.Execute(_gameViewModel.UserHero);
+                else
+                    _gameViewModel.OpponentAttacksCommand.Execute("Weak");
+            }
+            else if (_aiHero.HeroType == HeroType.Ranger)
+            {
+                if(_aiHero.Mana >= Globals.RANGER_ULT_STRONG_ATTACK_MANA_REQ && _aiHero.IsFirstSpellActive)
+                {
+                    _gameViewModel.OpponentAttacksCommand.Execute("Strong");
+                }
+                else
+                {
+                    if (_aiHero.Mana >= Globals.RANGER_UP_INTELLIGENCE_MANA_REQ && OperationAuthtorization(55))
+                        _gameViewModel.OpponentUpIntelligenceCommand.Execute(null);
+                    else if (_aiHero.Mana >= Globals.RANGER_ULT_MANA_REQ && OperationAuthtorization(35))
+                        _gameViewModel.OpponentAttacksCommand.Execute("Ult");
+                    else if (_aiHero.Mana >= Globals.RANGER_SPELL1_MANA_REQ && (!_aiHero.IsFirstSpellActive && !_aiHero.IsSecondSpellActive) && OperationAuthtorization(10))
+                        _gameViewModel.OpponentUseFirstSpellCommand.Execute(_gameViewModel.UserHero);
+                    else if (_aiHero.Mana >= Globals.STRONG_ATTACK_MANA_REQ && OperationAuthtorization(15))
+                        _gameViewModel.OpponentAttacksCommand.Execute("Strong");
+                    else if (_aiHero.Mana >= Globals.RANGER_SPELL2_MANA_REQ && (!_aiHero.IsSecondSpellActive && !_aiHero.IsFirstSpellActive) && OperationAuthtorization(10))
+                        _gameViewModel.OpponentUseSecondSpellCommand.Execute(_gameViewModel.UserHero);
+                    else
+                        _gameViewModel.OpponentAttacksCommand.Execute("Weak");
+                }
+            }
 
         }
 
